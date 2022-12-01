@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace QLBikeStoresAPI.Models
+namespace Services.Models
 {
     public partial class demoContext : DbContext
     {
@@ -247,24 +247,24 @@ namespace QLBikeStoresAPI.Models
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.CustomerId)
                     .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK__orders__customer__34C8D9D1");
+                    .HasConstraintName("FK__orders__customer__5165187F");
 
                 entity.HasOne(d => d.Staff)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.StaffId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__orders__staff_id__36B12243");
+                    .HasConstraintName("FK__orders__staff_id__52593CB8");
 
                 entity.HasOne(d => d.Store)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.StoreId)
-                    .HasConstraintName("FK__orders__store_id__35BCFE0A");
+                    .HasConstraintName("FK__orders__store_id__534D60F1");
             });
 
             modelBuilder.Entity<OrderItem>(entity =>
             {
                 entity.HasKey(e => new { e.OrderId, e.ItemId })
-                    .HasName("PK__order_it__837942D410176E28");
+                    .HasName("PK__order_it__837942D40FD02568");
 
                 entity.ToTable("order_items", "sales");
 
@@ -287,12 +287,12 @@ namespace QLBikeStoresAPI.Models
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.OrderItems)
                     .HasForeignKey(d => d.OrderId)
-                    .HasConstraintName("FK__order_ite__order__3A81B327");
+                    .HasConstraintName("FK__order_ite__order__4F7CD00D");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.OrderItems)
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__order_ite__produ__3B75D760");
+                    .HasConstraintName("FK__order_ite__produ__5070F446");
             });
 
             modelBuilder.Entity<Product>(entity =>
@@ -329,19 +329,19 @@ namespace QLBikeStoresAPI.Models
                 entity.HasOne(d => d.Brand)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.BrandId)
-                    .HasConstraintName("FK__products__brand___29572725");
+                    .HasConstraintName("FK__products__brand___4BAC3F29");
 
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.CategoryId)
-                    .HasConstraintName("FK__products__catego__286302EC");
+                    .HasConstraintName("FK__products__catego__4CA06362");
             });
 
             modelBuilder.Entity<Staff>(entity =>
             {
                 entity.ToTable("staffs", "sales");
 
-                entity.HasIndex(e => e.Email, "UQ__staffs__AB6E6164DCEDFACF")
+                entity.HasIndex(e => e.Email, "UQ__staffs__AB6E6164CFBF9DB1")
                     .IsUnique();
 
                 entity.Property(e => e.StaffId).HasColumnName("staff_id");
@@ -378,18 +378,18 @@ namespace QLBikeStoresAPI.Models
                 entity.HasOne(d => d.Manager)
                     .WithMany(p => p.InverseManager)
                     .HasForeignKey(d => d.ManagerId)
-                    .HasConstraintName("FK__staffs__manager___31EC6D26");
+                    .HasConstraintName("FK__staffs__manager___5441852A");
 
                 entity.HasOne(d => d.Store)
                     .WithMany(p => p.staff)
                     .HasForeignKey(d => d.StoreId)
-                    .HasConstraintName("FK__staffs__store_id__30F848ED");
+                    .HasConstraintName("FK__staffs__store_id__5535A963");
             });
 
             modelBuilder.Entity<Stock>(entity =>
             {
                 entity.HasKey(e => new { e.StoreId, e.ProductId })
-                    .HasName("PK__stocks__E68284D3A47CDDFD");
+                    .HasName("PK__stocks__E68284D3F8C3C484");
 
                 entity.ToTable("stocks", "production");
 
@@ -402,12 +402,12 @@ namespace QLBikeStoresAPI.Models
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.Stocks)
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__stocks__product___3F466844");
+                    .HasConstraintName("FK__stocks__product___4D94879B");
 
                 entity.HasOne(d => d.Store)
                     .WithMany(p => p.Stocks)
                     .HasForeignKey(d => d.StoreId)
-                    .HasConstraintName("FK__stocks__store_id__3E52440B");
+                    .HasConstraintName("FK__stocks__store_id__4E88ABD4");
             });
 
             modelBuilder.Entity<Store>(entity =>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace QLBikeStoresAPI.Models
+namespace Services.Models
 {
     public partial class AspNetUser
     {
