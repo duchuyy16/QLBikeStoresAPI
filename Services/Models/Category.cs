@@ -3,17 +3,17 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace QLBikeStoresAPI.Models
+namespace Services.Models
 {
-    public partial class Brand
+    public partial class Category
     {
-        public Brand()
+        public Category()
         {
             Products = new HashSet<Product>();
         }
 
-        public int BrandId { get; set; }
-        public string BrandName { get; set; }
+        public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
     }

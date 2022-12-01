@@ -6,7 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using QLBikeStoresAPI.Models;
+using Services.Interfaces;
+using Services.Models;
+using Services.XuLy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +31,7 @@ namespace QLBikeStoresAPI
 
             services.AddControllers();
             services.AddDbContext<demoContext>();
+            services.AddScoped<IXuLyTheLoaiSanPham, XuLyTheLoaiSanPham>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
