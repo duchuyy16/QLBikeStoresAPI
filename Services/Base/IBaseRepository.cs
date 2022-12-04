@@ -13,5 +13,6 @@ namespace Services.Base
         bool Sua(T entity);
         bool Xoa(T entity);
         IEnumerable<T> DocDanhSach(params Expression<Func<T, object>>[] cacthamso);
+        IEnumerable<T> DocTheoDieuKien(Expression<Func<T, bool>> dieukien, params Expression<Func<T, object>>[] cacthamso);
     }
 }
