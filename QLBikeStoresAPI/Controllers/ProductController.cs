@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QLBikeStoresAPI.Models;
+using Services.Models;
+using Services.XuLy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,25 +13,25 @@ namespace QLBikeStoresAPI.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly demoContext _context;
-        public ProductController(demoContext context)
+        private readonly XyLySanPham _iXuLySanPham;
+        public ProductController(XyLySanPham iXuLySanPham)
         {
-            _context = context;
+            _iXuLySanPham = iXuLySanPham;
         }
 
-        [HttpGet("DanhSachSanPham")]
-        public List<Product> ListProduct()
+        [HttpGet("DocThongTinSanPham")]
+        public ProductModel DocThongTinSanPham()
         {
-            var products = _context.Products.Include(p => p.Category).Include(m => m.Stocks).ToList();
-            return products;
-        }
-
-
-        [HttpGet("DanhSachSanPhamTheoTheLoai/{categoryId}")]
-        public List<Product> ListCategory(int categoryId)
-        {
-            var products = _context.Products.Where(x => x.CategoryId == categoryId).Include(p => p.Category).Include(m => m.Stocks).ToList();
-            return products;
+            var product = _iXuLySanPham.DocDanhSachSanPham();
+            ProductModel productmodel = null;
+            if(productmodel!=null)
+            {
+                productmodel=new ProductModel
+                {
+                    ProductId=product.ProductId,
+                    ProductName=product.ProductName,
+                }
+            }
         }
     }
 }
