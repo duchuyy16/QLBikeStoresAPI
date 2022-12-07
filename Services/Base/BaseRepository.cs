@@ -1,4 +1,5 @@
-﻿using Services.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,16 +17,41 @@ namespace Services.Base
         }
         public IEnumerable<T> DocDanhSach(params System.Linq.Expressions.Expression<Func<T, object>>[] cacthamso)
         {
-            var results = _context.Set<T>().ToList();
-            return results;
+            var results = _context.Set<T>().AsQueryable();
+            foreach(var include in cacthamso)
+            {
+                results.Include(include);
+            }
+            return results.ToList();
         }
+
+        public IEnumerable<T> DocTheoDieuKien(System.Linq.Expressions.Expression<Func<T, bool>> dieukien, params System.Linq.Expressions.Expression<Func<T, object>>[] cacthamso)
+        {
+            var results = _context.Set<T>().Where(dieukien);
+            foreach (var include in cacthamso)
+            {
+                results.Include(include);
+            }
+            return results.ToList();
+        }
+
+        //public IEnumerable<T> DocTheoDieuKien(System.Linq.Expressions.Expression<Func<T, bool>> dieukien, params Expression<Func<T, object>>[] cacthamso)
+        //{
+        //    var results = _context.Set<T>().AsQueryable();
+        //    foreach (var include in cacthamso)
+        //    {
+        //        results.Include(include);
+        //    }
+        //    return results.ToList();
+        //}
 
         public bool Sua(T entity)
         {
             try
             {
+                _context.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 //var ent = _context.Set<T>().FirstOrDefault(x=>x.)(entity);
-                //_context.SaveChanges();
+                _context.SaveChanges();
                 //return ent.Entity;
                 return true;
             }

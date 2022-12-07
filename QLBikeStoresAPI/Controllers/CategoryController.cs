@@ -22,6 +22,8 @@ namespace QLBikeStoresAPI.Controllers
         public CategoryModel DocThongTin(int id)
         {
             var category = _iXuLyTheLoai.DocThongTin(id);
+            //var category = _iXuLyTheLoai.DocTheoDieuKien(x => x.Id.Equals(id)).FirstOrDefault();
+
             CategoryModel productcategory = null;
             if (category != null)
                 productcategory = new CategoryModel
