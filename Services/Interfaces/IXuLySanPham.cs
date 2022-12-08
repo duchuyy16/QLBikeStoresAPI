@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Services.Interfaces
 {
-    internal interface IXuLySanPham: IBaseRepository<Product>
+    public interface IXuLySanPham: IBaseRepository<Product>
     {
         List<Product> DocDanhSachSanPham();
-        Product DocDanhSachSanPhamTheoTheLoai(int categoryId);
-        Product DocDanhSachSanPhamTheoTheLoaiThuongHieu(int categoryId);
+        List<Product> DocDanhSachSanPhamTheoTheLoai(int categoryId);
+        List<Product> DocDanhSachSanPhamTheoTheLoaiThuongHieu(int categoryId);
     }
 }
