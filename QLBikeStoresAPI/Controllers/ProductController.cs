@@ -19,19 +19,19 @@ namespace QLBikeStoresAPI.Controllers
             _iXuLySanPham = iXuLySanPham;
         }
 
-        [HttpGet("DocThongTinSanPham")]
-        public ProductModel DocThongTinSanPham()
-        {
-            var product = _iXuLySanPham.DocDanhSachSanPham();
-            ProductModel productmodel = null;
-            if(productmodel!=null)
-            {
-                productmodel=new ProductModel
-                {
-                    ProductId=product.ProductId,
-                    ProductName=product.ProductName,
-                }
-            }
-        }
+        //[HttpGet("DocThongTinSanPham")]
+        //public ProductModel DocThongTinSanPham()
+        //{
+        //    var product = _iXuLySanPham.DocDanhSachSanPham();
+        //    ProductModel productmodel = null;
+        //    if(productmodel!=null)
+        //    {
+        //        productmodel=new ProductModel
+        //        {
+        //            ProductId=product.ProductId,
+        //            ProductName=product.ProductName,
+        //        }
+        //    }
+        //}
     }
 }
