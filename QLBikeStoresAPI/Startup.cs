@@ -33,6 +33,7 @@ namespace QLBikeStoresAPI
             services.AddDbContext<demoContext>();
             services.AddScoped<IXuLyTheLoaiSanPham, XuLyTheLoaiSanPham>();
             services.AddScoped<IXuLySanPham,XuLySanPham>();
+            services.AddScoped<IXuLyCuaHang, XuLyCuaHang>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

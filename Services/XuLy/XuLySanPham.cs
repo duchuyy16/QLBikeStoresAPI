@@ -18,15 +18,17 @@ namespace Services.XuLy
                 var products=_context.Products.ToList();
                 return products;
         }
-        //Include(p=>p.Category).Include(m=>m.Stocks).OrderBy(l=>l.ListPrice)
+        
         public List<Product> DocDanhSachSanPhamTheoTheLoai(int categoryId)
         {
-            throw new NotImplementedException();
+            var products = _context.Products.Where(x => x.CategoryId == categoryId).Include(p => p.Category).ToList();
+            return products;
         }
 
-        public List<Product> DocDanhSachSanPhamTheoTheLoaiThuongHieu(int categoryId)
+        public List<Product> DocDanhSachSanPhamTheoTheLoaiThuongHieu(int categoryId, int brandId)
         {
-            throw new NotImplementedException();
+            var products = _context.Products.Where(x => x.CategoryId == categoryId && x.BrandId == brandId).Include(p => p.Category).ToList();
+            return products;
         }
 
         
