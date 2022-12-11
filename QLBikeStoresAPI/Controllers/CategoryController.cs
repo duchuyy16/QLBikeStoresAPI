@@ -18,7 +18,7 @@ namespace QLBikeStoresAPI.Controllers
         {
             _iXuLyTheLoai = iXuLyTheLoai;
         }
-        [HttpGet("DocThongTin/{id}")]
+        [HttpPost("DocThongTin/{id}")]
         public CategoryModel DocThongTin(int id)
         {
             var category = _iXuLyTheLoai.DocThongTin(id);
