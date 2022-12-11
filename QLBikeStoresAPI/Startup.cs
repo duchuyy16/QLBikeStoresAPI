@@ -28,7 +28,10 @@ namespace QLBikeStoresAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddCors(cors =>
+            {
+                cors.AddPolicy("AllowOrgin", c => c.AllowAnyOrigin());
+            });
             services.AddControllers();
             services.AddDbContext<demoContext>();
             services.AddScoped<IXuLyTheLoaiSanPham, XuLyTheLoaiSanPham>();
@@ -43,7 +46,7 @@ namespace QLBikeStoresAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors(c => c.AllowAnyOrigin());
             app.UseHttpsRedirection();
 
             app.UseRouting();

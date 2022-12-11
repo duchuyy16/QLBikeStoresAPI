@@ -20,7 +20,7 @@ namespace QLBikeStoresAPI.Controllers
             _iXuLySanPham = iXuLySanPham;
         }
 
-        [HttpGet("DocDanhSachSanPham")]
+        [HttpPost("DocDanhSachSanPham")]
         public List<ProductModel> DocDanhSachSanPham()
         {
             var product = _iXuLySanPham.DocDanhSachSanPham();
