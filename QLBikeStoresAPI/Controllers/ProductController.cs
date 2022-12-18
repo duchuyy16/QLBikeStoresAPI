@@ -45,7 +45,7 @@ namespace QLBikeStoresAPI.Controllers
             return listproduct;
         }
 
-        [HttpGet("DocDanhSachSanPhamTheoTheLoai/{categoryId}")]
+        [HttpPost("DocDanhSachSanPhamTheoTheLoai/{categoryId}")]
         public List<ProductModel> DocDanhSachSanPhamTheoTheLoai(int categoryId)
         {
             var product = _iXuLySanPham.DocDanhSachSanPhamTheoTheLoai(categoryId);
@@ -70,7 +70,7 @@ namespace QLBikeStoresAPI.Controllers
             return listproduct;
         }
 
-        [HttpGet("DocDanhSachSanPhamTheoTheLoaiThuongHieu/{categoryId}&{brandId}")]
+        [HttpPost("DocDanhSachSanPhamTheoTheLoaiThuongHieu/{categoryId}&{brandId}")]
         public List<ProductModel> DocDanhSachSanPhamTheoTheLoaiThuongHieu(int categoryId, int brandId)
         {
             var product = _iXuLySanPham.DocDanhSachSanPhamTheoTheLoaiThuongHieu(categoryId,brandId);
@@ -93,5 +93,7 @@ namespace QLBikeStoresAPI.Controllers
             }
             return listproduct;
         }
+
+        //chay trong postman roi khoi chay ben client
     }
 }

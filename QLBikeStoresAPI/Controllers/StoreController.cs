@@ -17,7 +17,7 @@ namespace QLBikeStoresAPI.Controllers
             _iXuLyCuaHang = iXuLyCuaHang;
         }
 
-        [HttpGet("DocDanhSachCuaHang")]
+        [HttpPost("DocDanhSachCuaHang")]
         public List<StoreModel> DocDanhSachCuaHang()
         {
             var store=_iXuLyCuaHang.DocDanhSachCuaHang();
