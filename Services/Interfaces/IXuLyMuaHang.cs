@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Services.Interfaces
 {
-    public interface IXuLyNhanVien : IBaseRepository<Staff>
+    public interface IXuLyMuaHang:IBaseRepository<Order>
     {
-        List<Staff> DanhSachNhanVien();
+        List<Order> DanhSachMuaHang();
     }
 }

@@ -1,38 +1,37 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using QLBikeStoresAPI.Models;
 using Services.Interfaces;
 using System.Collections.Generic;
 
 namespace QLBikeStoresAPI.Controllers
 {
-    public class BrandController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class BrandController : ControllerBase
     {
-        public IActionResult Index()
+        private readonly IXuLyNhanHieu _iXuLyNhanHieu;
+        public BrandController(IXuLyNhanHieu iXuLyNhanHieu)
         {
-            return View();
+            _iXuLyNhanHieu = iXuLyNhanHieu;
         }
 
-        //[HttpPost("DanhSachNhanHieu")]
-        //public List<BrandModel> DanhSachNhanHieu()
-        //{
-         
-        //    //List<StoreModel> liststore = new List<StoreModel>();
-        //    //foreach (var item in store)
-        //    //{
-        //    //    StoreModel storemodel = new StoreModel
-        //    //    {
-        //    //        StoreId = item.StoreId,
-        //    //        StoreName = item.StoreName,
-        //    //        Phone = item.Phone,
-        //    //        City = item.City,
-        //    //        Email = item.Email,
-        //    //        State = item.State,
-        //    //        Street = item.Street,
-        //    //        ZipCode = item.ZipCode,
-        //    //    };
-        //    //    liststore.Add(storemodel);
-        //    //}
-        //    //return liststore;
-        //}
+        [HttpPost("DanhSachNhanHieu")]
+        public List<BrandModel> DanhSachNhanHieu()
+        {
+
+            var brands = _iXuLyNhanHieu.DanhSachNhanHieu();
+            List<BrandModel> listbrand = new List<BrandModel>();
+            foreach (var item in brands)
+            {
+                BrandModel brand = new BrandModel
+                {
+                    BrandId = item.BrandId,
+                    BrandName = item.BrandName
+                };
+                listbrand.Add(brand);
+            }
+            return listbrand;
+        }
     }
 }

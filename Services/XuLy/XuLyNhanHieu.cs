@@ -1,4 +1,5 @@
-﻿using Services.Base;
+﻿using Microsoft.EntityFrameworkCore;
+using Services.Base;
 using Services.Interfaces;
 using Services.Models;
 using System;
@@ -9,13 +10,19 @@ using System.Threading.Tasks;
 
 namespace Services.XuLy
 {
-    internal class XuLyNhanHieu : BaseRepository<Brand>, IXuLyNhanHieu
+    public class XuLyNhanHieu : BaseRepository<Brand>, IXuLyNhanHieu
     {
         public XuLyNhanHieu(demoContext context) : base(context){}
 
         public List<Brand> DanhSachNhanHieu()
         {
             var brands = _context.Brands.ToList();
+            return brands;
+        }
+
+        public List<Brand> DanhSachNhanHieuTheoDieuKien(int category)
+        {
+            var brands = _context.Brands.Include(x => x.Products).Where(n => n.Products.Any(m => m.CategoryId == category)).ToList();
             return brands;
         }
     }

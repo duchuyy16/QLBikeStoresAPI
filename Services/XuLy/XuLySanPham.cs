@@ -15,8 +15,8 @@ namespace Services.XuLy
         public XuLySanPham(demoContext context):base(context) { }
         public List<Product> DocDanhSachSanPham()
         {
-                var products= _context.Products.Include(p => p.Category).Include(m => m.Stocks).ToList();
-                return products;
+            var products= _context.Products.Include(p => p.Brand).Include(p => p.Category).Include(m => m.Stocks).ToList();
+            return products;
         }
         
         public List<Product> DocDanhSachSanPhamTheoTheLoai(int categoryId)
