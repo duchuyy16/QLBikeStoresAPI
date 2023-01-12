@@ -20,6 +20,26 @@ namespace QLBikeStoresAPI.Controllers
             _iXuLySanPham = iXuLySanPham;
         }
 
+        [HttpPost("ChiTietSanPham/{id}")]
+        public ProductModel ChiTietSanPham(int id)
+        {
+            var productdetails = _iXuLySanPham.ChiTietSanPham(id);
+            ProductModel product = null;
+            if (productdetails != null)
+                product = new ProductModel
+                {
+                    ProductId = productdetails.ProductId,
+                    ProductName = productdetails.ProductName,
+                    ListPrice = productdetails.ListPrice,
+                    BrandId = productdetails.BrandId,
+                    CategoryId = productdetails.CategoryId,
+                    Discount = productdetails.Discount,
+                    ImageBike = productdetails.ImageBike,
+                    ModelYear = productdetails.ModelYear
+                };
+            return product;
+        }
+
         [HttpPost("DocDanhSachSanPham")]
         public List<ProductModel> DocDanhSachSanPham()
         {
@@ -94,6 +114,31 @@ namespace QLBikeStoresAPI.Controllers
             return listproduct;
         }
 
-        //chay trong postman roi khoi chay ben client
+
+        [HttpPost("TimKiem/{name}")]
+        public List<ProductModel> TimKiem(string name)
+        {
+            var product = _iXuLySanPham.TimKiem(name);
+            List<ProductModel> listproduct = new List<ProductModel>();
+
+            foreach (var item in product)
+            {
+                ProductModel productmodel = new ProductModel
+                {
+                    ProductId = item.ProductId,
+                    ProductName = item.ProductName,
+                    ListPrice = item.ListPrice,
+                    BrandId = item.BrandId,
+                    CategoryId = item.CategoryId,
+                    Discount = item.Discount,
+                    ImageBike = item.ImageBike,
+                    ModelYear = item.ModelYear,
+                };
+                listproduct.Add(productmodel);
+            }
+
+            return listproduct;
+        }
+
     }
 }

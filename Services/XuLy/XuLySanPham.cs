@@ -15,7 +15,7 @@ namespace Services.XuLy
         public XuLySanPham(demoContext context):base(context) { }
         public List<Product> DocDanhSachSanPham()
         {
-                var products=_context.Products.ToList();
+                var products= _context.Products.Include(p => p.Category).Include(m => m.Stocks).ToList();
                 return products;
         }
         
@@ -31,6 +31,16 @@ namespace Services.XuLy
             return products;
         }
 
-        
+        public Product ChiTietSanPham(int id)
+        {
+            var products = _context.Products.Include(p => p.Category).Include(m => m.Brand).Include(m => m.Stocks).SingleOrDefault(p => p.ProductId == id);
+            return products;
+        }
+
+        public List<Product> TimKiem(string name)
+        {
+            var products = _context.Products.Where(m => m.ProductName.Contains(name)).Include(p => p.Category).Include(m => m.Stocks).ToList();
+            return products;
+        }
     }
 }

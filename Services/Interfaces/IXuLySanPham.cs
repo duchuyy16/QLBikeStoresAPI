@@ -13,5 +13,8 @@ namespace Services.Interfaces
         List<Product> DocDanhSachSanPham();
         List<Product> DocDanhSachSanPhamTheoTheLoai(int categoryId);
         List<Product> DocDanhSachSanPhamTheoTheLoaiThuongHieu(int categoryId, int brandId);
+        Product ChiTietSanPham(int id);
+        List<Product> TimKiem(string name);
     }
+
 }

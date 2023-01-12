@@ -33,5 +33,24 @@ namespace QLBikeStoresAPI.Controllers
                 };
             return productcategory;
         }
+
+        [HttpPost("DanhSachTheLoai")]
+        public List<CategoryModel> DanhSachTheLoai()
+        {
+            var categories = _iXuLyTheLoai.DanhSachTheLoai();
+            //var category = _iXuLyTheLoai.DocTheoDieuKien(x => x.Id.Equals(id)).FirstOrDefault();
+            List<CategoryModel> listcategory = new List<CategoryModel>();
+            foreach (var item in categories)
+            {
+                CategoryModel category = new CategoryModel
+                {
+                    CategoryId = item.CategoryId,
+                    CategoryName = item.CategoryName
+                };
+                listcategory.Add(category);
+            }
+            return listcategory;
+        }
+
     }
 }

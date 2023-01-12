@@ -12,6 +12,13 @@ namespace Services.XuLy
     public class XuLyTheLoaiSanPham:BaseRepository<Category>,IXuLyTheLoaiSanPham
     {
         public XuLyTheLoaiSanPham(demoContext context) : base(context) { }
+
+        public List<Category> DanhSachTheLoai()
+        {
+            var categories= _context.Categories.ToList();
+            return categories;
+        }
+
         public Category DocThongTin(int id)
         {
             if (id <= 0)
