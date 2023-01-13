@@ -13,6 +13,12 @@ namespace Services.XuLy
     {
         public XuLyKhachHang(demoContext context) : base(context) {}
 
+        public Customer ChiTietKhachHang(int id)
+        {
+            var customers = _context.Customers.FirstOrDefault(c=>c.CustomerId.Equals(id));
+            return customers;
+        }
+
         public List<Customer> DanhSachKhachHang()
         {
             var customers = _context.Customers.ToList();

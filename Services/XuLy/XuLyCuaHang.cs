@@ -13,6 +13,12 @@ namespace Services.XuLy
     {
         public XuLyCuaHang(demoContext context) : base(context) { }
 
+        public Store ChiTietCuaHang(int id)
+        {
+            var stores = _context.Stores.FirstOrDefault(x=>x.StoreId.Equals(id));
+            return stores;
+        }
+
         public List<Store> DocDanhSachCuaHang()
         {
             var stores = _context.Stores.ToList();

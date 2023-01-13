@@ -34,5 +34,22 @@ namespace QLBikeStoresAPI.Controllers
             }
             return liststock;
         }
+
+        [HttpPost("ChiTiet/{productId}&{storeId}")]
+        public StockModel ChiTietDonDatHang(int productId, int storeId)
+        {
+            var stockdetails = _iXuLyKhoHang.ChiTiet(productId, storeId);
+            StockModel stock = null;
+            if (stockdetails != null)
+            {
+                stock = new StockModel
+                {
+                    ProductId = stockdetails.ProductId,
+                    StoreId = stockdetails.StoreId,
+                    Quantity = stockdetails.Quantity
+                };
+            }
+            return stock;
+        }
     }
 }

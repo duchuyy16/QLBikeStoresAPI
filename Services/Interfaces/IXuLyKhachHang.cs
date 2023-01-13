@@ -11,5 +11,6 @@ namespace Services.Interfaces
     public interface IXuLyKhachHang : IBaseRepository<Customer>
     {
         List<Customer> DanhSachKhachHang();
+        Customer ChiTietKhachHang(int id);
     }
 }

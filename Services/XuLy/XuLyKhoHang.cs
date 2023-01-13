@@ -16,6 +16,12 @@ namespace Services.XuLy
         {
         }
 
+        public Stock ChiTiet(int productId, int storeId)
+        {
+            var stocks = _context.Stocks.Include(s => s.Product).Include(s => s.Store).FirstOrDefault(s=>s.ProductId==productId && s.StoreId==storeId);
+            return stocks;
+        }
+
         public List<Stock> DocDanhSach()
         {
             var stocks = _context.Stocks.Include(s => s.Product).Include(s => s.Store).ToList();

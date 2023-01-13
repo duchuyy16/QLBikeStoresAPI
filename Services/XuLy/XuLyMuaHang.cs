@@ -16,6 +16,12 @@ namespace Services.XuLy
         {
         }
 
+        public Order ChiTietMuaHang(int id)
+        {
+            var orders = _context.Orders.Include(o => o.Customer).Include(o => o.Staff).Include(o => o.Store).FirstOrDefault(s=>s.OrderId.Equals(id));
+            return orders;
+        }
+
         public List<Order> DanhSachMuaHang()
         {
             var orders = _context.Orders.Include(o => o.Customer).Include(o => o.Staff).Include(o => o.Store).ToList();

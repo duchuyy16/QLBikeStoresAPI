@@ -14,6 +14,12 @@ namespace Services.XuLy
     {
         public XuLyNhanHieu(demoContext context) : base(context){}
 
+        public Brand ChiTietNhanHieu(int id)
+        {
+            var brands = _context.Brands.FirstOrDefault(b=>b.BrandId.Equals(id));
+            return brands;
+        }
+
         public List<Brand> DanhSachNhanHieu()
         {
             var brands = _context.Brands.ToList();

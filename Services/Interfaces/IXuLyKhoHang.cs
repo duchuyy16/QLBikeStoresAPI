@@ -11,5 +11,6 @@ namespace Services.Interfaces
     public interface IXuLyKhoHang:IBaseRepository<Stock>
     {
         List<Stock> DocDanhSach();
+        Stock ChiTiet(int productId,int storeId);
     }
 }

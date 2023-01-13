@@ -33,5 +33,22 @@ namespace QLBikeStoresAPI.Controllers
             }
             return listbrand;
         }
+
+        [HttpPost("ChiTietNhanHieu/{id}")]
+        public BrandModel ChiTietNhanHieu(int id)
+        {
+
+            var brands = _iXuLyNhanHieu.ChiTietNhanHieu(id);
+            BrandModel brand = null;
+            if (brands !=null)
+            {
+                brand = new BrandModel
+                {
+                    BrandId = brands.BrandId,
+                    BrandName = brands.BrandName
+                };
+            }
+            return brand;
+        }
     }
 }

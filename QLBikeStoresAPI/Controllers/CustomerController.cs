@@ -40,5 +40,28 @@ namespace QLBikeStoresAPI.Controllers
             }
             return listcustomer;
         }
+
+        [HttpPost("ChiTietKhachHang/{id}")]
+        public CustomerModel ChiTietKhachHang(int id)
+        {
+            var customerdetails = _iXuLyKhachHang.ChiTietKhachHang(id);
+            CustomerModel customer = null;
+            if(customerdetails != null)
+            {
+                customer = new CustomerModel
+                {
+                    CustomerId = customerdetails.CustomerId,
+                    FirstName = customerdetails.FirstName,
+                    LastName = customerdetails.LastName,
+                    Phone = customerdetails.Phone,
+                    Email = customerdetails.Email,
+                    Street = customerdetails.Street,
+                    City = customerdetails.City,
+                    State = customerdetails.State,
+                    ZipCode = customerdetails.ZipCode
+                };
+            }
+            return customer;
+        }
     }
 }

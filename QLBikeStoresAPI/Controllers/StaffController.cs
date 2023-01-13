@@ -32,12 +32,34 @@ namespace QLBikeStoresAPI.Controllers
                     Phone = item.Phone,
                     Email = item.Email,
                     Active = item.Active,
-                    StoreId = item.StoreId,
+                    StoreId = (int)item.StoreId,
                     ManagerId = item.ManagerId
                 };
                 liststaff.Add(staff);
             }
             return liststaff;
+        }
+
+        [HttpPost("ChiTietNhanVien/{id}")]
+        public StaffModel ChiTietNhanVien(int id)
+        {
+            var staffs = _iXuLyNhanVien.ChiTietNhanVien(id);
+            StaffModel staff = null;
+            if (staffs!=null)
+            {
+                staff = new StaffModel
+                {
+                    StaffId = staffs.StaffId,
+                    FirstName = staffs.FirstName,
+                    LastName = staffs.LastName,
+                    Phone = staffs.Phone,
+                    Email = staffs.Email,
+                    Active = staffs.Active,
+                    StoreId = (int)staffs.StoreId,
+                    ManagerId = staffs.ManagerId
+                };
+            }
+            return staff;
         }
     }
 }

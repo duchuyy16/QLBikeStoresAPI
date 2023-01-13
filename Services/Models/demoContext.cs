@@ -17,13 +17,13 @@ namespace Services.Models
         {
         }
 
-       
         public virtual DbSet<Brand> Brands { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderItem> OrderItems { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Staff> Staffs { get; set; }
         public virtual DbSet<Stock> Stocks { get; set; }
         public virtual DbSet<Store> Stores { get; set; }
@@ -39,8 +39,6 @@ namespace Services.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
-
-          
 
             modelBuilder.Entity<Brand>(entity =>
             {
@@ -97,6 +95,11 @@ namespace Services.Models
                     .IsUnicode(false)
                     .HasColumnName("last_name");
 
+                entity.Property(e => e.Password)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("password");
+
                 entity.Property(e => e.Phone)
                     .HasMaxLength(25)
                     .IsUnicode(false)
@@ -111,6 +114,11 @@ namespace Services.Models
                     .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("street");
+
+                entity.Property(e => e.Username)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("username");
 
                 entity.Property(e => e.ZipCode)
                     .HasMaxLength(5)
@@ -148,24 +156,24 @@ namespace Services.Models
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.CustomerId)
                     .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK__orders__customer__5165187F");
+                    .HasConstraintName("FK__orders__customer__34C8D9D1");
 
                 entity.HasOne(d => d.Staff)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.StaffId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__orders__staff_id__52593CB8");
+                    .HasConstraintName("FK__orders__staff_id__36B12243");
 
                 entity.HasOne(d => d.Store)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.StoreId)
-                    .HasConstraintName("FK__orders__store_id__534D60F1");
+                    .HasConstraintName("FK__orders__store_id__35BCFE0A");
             });
 
             modelBuilder.Entity<OrderItem>(entity =>
             {
                 entity.HasKey(e => new { e.OrderId, e.ItemId })
-                    .HasName("PK__order_it__837942D40FD02568");
+                    .HasName("PK__order_it__837942D410176E28");
 
                 entity.ToTable("order_items", "sales");
 
@@ -188,12 +196,12 @@ namespace Services.Models
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.OrderItems)
                     .HasForeignKey(d => d.OrderId)
-                    .HasConstraintName("FK__order_ite__order__4F7CD00D");
+                    .HasConstraintName("FK__order_ite__order__3A81B327");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.OrderItems)
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__order_ite__produ__5070F446");
+                    .HasConstraintName("FK__order_ite__produ__3B75D760");
             });
 
             modelBuilder.Entity<Product>(entity =>
@@ -205,6 +213,10 @@ namespace Services.Models
                 entity.Property(e => e.BrandId).HasColumnName("brand_id");
 
                 entity.Property(e => e.CategoryId).HasColumnName("category_id");
+
+                entity.Property(e => e.Describe)
+                    .IsUnicode(false)
+                    .HasColumnName("describe");
 
                 entity.Property(e => e.Discount)
                     .HasColumnType("decimal(4, 0)")
@@ -230,19 +242,33 @@ namespace Services.Models
                 entity.HasOne(d => d.Brand)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.BrandId)
-                    .HasConstraintName("FK__products__brand___4BAC3F29");
+                    .HasConstraintName("FK__products__brand___29572725");
 
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.CategoryId)
-                    .HasConstraintName("FK__products__catego__4CA06362");
+                    .HasConstraintName("FK__products__catego__286302EC");
+            });
+
+            modelBuilder.Entity<Role>(entity =>
+            {
+                entity.ToTable("roles", "sales");
+
+                entity.Property(e => e.RoleId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("role_id");
+
+                entity.Property(e => e.RoleName)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("role_name");
             });
 
             modelBuilder.Entity<Staff>(entity =>
             {
                 entity.ToTable("staffs", "sales");
 
-                entity.HasIndex(e => e.Email, "UQ__staffs__AB6E6164CFBF9DB1")
+                entity.HasIndex(e => e.Email, "UQ__staffs__AB6E6164DCEDFACF")
                     .IsUnique();
 
                 entity.Property(e => e.StaffId).HasColumnName("staff_id");
@@ -269,28 +295,46 @@ namespace Services.Models
 
                 entity.Property(e => e.ManagerId).HasColumnName("manager_id");
 
+                entity.Property(e => e.Password)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("password");
+
                 entity.Property(e => e.Phone)
                     .HasMaxLength(25)
                     .IsUnicode(false)
                     .HasColumnName("phone");
 
+                entity.Property(e => e.RoleId).HasColumnName("role_id");
+
                 entity.Property(e => e.StoreId).HasColumnName("store_id");
+
+                entity.Property(e => e.Username)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("username");
 
                 entity.HasOne(d => d.Manager)
                     .WithMany(p => p.InverseManager)
                     .HasForeignKey(d => d.ManagerId)
-                    .HasConstraintName("FK__staffs__manager___5441852A");
+                    .HasConstraintName("FK__staffs__manager___31EC6D26");
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.staff)
+                    .HasForeignKey(d => d.RoleId)
+                    .HasConstraintName("fk_staffs_roles");
 
                 entity.HasOne(d => d.Store)
                     .WithMany(p => p.staff)
                     .HasForeignKey(d => d.StoreId)
-                    .HasConstraintName("FK__staffs__store_id__5535A963");
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK__staffs__store_id__30F848ED");
             });
 
             modelBuilder.Entity<Stock>(entity =>
             {
                 entity.HasKey(e => new { e.StoreId, e.ProductId })
-                    .HasName("PK__stocks__E68284D3F8C3C484");
+                    .HasName("PK__stocks__E68284D3A47CDDFD");
 
                 entity.ToTable("stocks", "production");
 
@@ -303,12 +347,12 @@ namespace Services.Models
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.Stocks)
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__stocks__product___4D94879B");
+                    .HasConstraintName("FK__stocks__product___3F466844");
 
                 entity.HasOne(d => d.Store)
                     .WithMany(p => p.Stocks)
                     .HasForeignKey(d => d.StoreId)
-                    .HasConstraintName("FK__stocks__store_id__4E88ABD4");
+                    .HasConstraintName("FK__stocks__store_id__3E52440B");
             });
 
             modelBuilder.Entity<Store>(entity =>

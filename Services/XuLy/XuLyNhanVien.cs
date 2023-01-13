@@ -16,6 +16,12 @@ namespace Services.XuLy
         {
         }
 
+        public Staff ChiTietNhanVien(int id)
+        {
+            var staffs = _context.Staffs.Include(s => s.Manager).Include(s => s.Store).FirstOrDefault(s=>s.StaffId.Equals(id));
+            return staffs;
+        }
+
         public List<Staff> DanhSachNhanVien()
         {
             var staffs = _context.Staffs.Include(s => s.Manager).Include(s => s.Store).ToList();

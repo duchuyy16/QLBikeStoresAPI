@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Services.Interfaces
 {
-    public interface IXuLyCuaHang:IBaseRepository<Store>
+    public interface IXuLyDonDatHang : IBaseRepository<OrderItem>
     {
-        List<Store> DocDanhSachCuaHang();
-        Store ChiTietCuaHang(int id);
+        List<OrderItem> DanhSachDonDatHang();
+        OrderItem ChiTietDonDatHang(int orderId,int itemId);
     }
 }

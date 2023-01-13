@@ -11,5 +11,6 @@ namespace Services.Interfaces
     public interface IXuLyMuaHang:IBaseRepository<Order>
     {
         List<Order> DanhSachMuaHang();
+        Order ChiTietMuaHang(int id);
     }
 }

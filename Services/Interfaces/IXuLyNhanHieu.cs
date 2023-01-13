@@ -12,5 +12,6 @@ namespace Services.Interfaces
     {
         List<Brand> DanhSachNhanHieu();
         List<Brand> DanhSachNhanHieuTheoDieuKien(int category);
+        Brand ChiTietNhanHieu(int id);
     }
 }
