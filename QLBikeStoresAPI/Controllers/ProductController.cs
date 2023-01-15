@@ -147,26 +147,42 @@ namespace QLBikeStoresAPI.Controllers
             return listproduct;
         }
 
-        [HttpPost("Themsanpham")]
-        public async Task<IActionResult> ThemSanPham(Product product)
-        {
-            try
-            {
-                var id =await _iXuLySanPham.ThemSanPham(Product);
-                var productdetails = await _iXuLySanPham.GetProduct(id);
-                return productdetails ==  null? NotFound() : Ok(productdetails);
-            }
-            catch
-            {
-                return BadRequest();
-            }
-        }
+        //[HttpPost("Themsanpham")]
+        //public async Task<IActionResult> ThemSanPham(Product product)
+        //{
+        //    try
+        //    {
+        //        var id =await _iXuLySanPham.ThemSanPham(product);
+        //        var productdetails = await _iXuLySanPham.GetProduct(id);
+        //        return productdetails ==  null? NotFound() : Ok(productdetails);
+        //    }
+        //    catch
+        //    {
+        //        return BadRequest();
+        //    }
+        //}
 
-        [HttpPost("GetProductById/{id}")]
-        public async Task<IActionResult> GetProductById(int id)
+        //[HttpPost("GetProductById/{id}")]
+        //public async Task<IActionResult> GetProductById(int id)
+        //{
+        //    var product = await _iXuLySanPham.GetProduct(id);
+        //    return product == null ? NotFound() : Ok(product);          
+        //}
+
+        [HttpPost("AddSP")]
+        public ProductModel AddSP(ProductModel product)
         {
-            var product = await _iXuLySanPham.GetProduct(id);
-            return product == null ? NotFound() : Ok(product);          
+            var newproduct = new Product
+            {
+                ProductName = product.ProductName,
+                BrandId = product.BrandId
+            };
+            var themsp = _iXuLySanPham.Them(newproduct);
+            return new ProductModel
+            {
+                ProductName = themsp.ProductName,
+
+            };
         }
     }
 }
