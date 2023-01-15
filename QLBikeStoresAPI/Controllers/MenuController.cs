@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QLBikeStoresAPI.Models;
+using Services.Interfaces;
 
 namespace QLBikeStoresAPI.Controllers
 {
@@ -8,7 +9,11 @@ namespace QLBikeStoresAPI.Controllers
     [ApiController]
     public class MenuController : ControllerBase
     {
-        
+        private readonly IXuLyMenu _iXuLyMenu;
+        public MenuController(IXuLyMenu iXuLyMenu)
+        {
+            _iXuLyMenu = iXuLyMenu;
+        }
 
         //[HttpPost("GetMenuList")]
         //public MenuModel GetMenuList()

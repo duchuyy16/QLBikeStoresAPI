@@ -12,5 +12,7 @@ namespace Services.Interfaces
     {
         List<Customer> DanhSachKhachHang();
         Customer ChiTietKhachHang(int id);
+        Customer KiemTraUsername(string username);
+        Customer DangNhap(LoginModel model);
     }
 }

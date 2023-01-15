@@ -42,5 +42,12 @@ namespace Services.XuLy
             var products = _context.Products.Where(m => m.ProductName.Contains(name)).Include(p => p.Category).Include(m => m.Stocks).ToList();
             return products;
         }
+
+        public int ThemSanPham(Product product)
+        {
+            _context.Products.Add(product);
+            _context.SaveChanges();
+            return product.ProductId;
+        }
     }
 }

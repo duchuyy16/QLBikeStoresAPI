@@ -35,7 +35,8 @@ namespace QLBikeStoresAPI.Controllers
                     CategoryId = productdetails.CategoryId,
                     Discount = productdetails.Discount,
                     ImageBike = productdetails.ImageBike,
-                    ModelYear = productdetails.ModelYear
+                    ModelYear = productdetails.ModelYear,
+                    Describe=productdetails.Describe,
                 };
             return product;
         }
@@ -58,6 +59,7 @@ namespace QLBikeStoresAPI.Controllers
                         Discount = item.Discount,
                         ImageBike = item.ImageBike,
                         ModelYear = item.ModelYear,
+                        Describe = item.Describe,
                     };
                     listproduct.Add(productmodel);
                 }
@@ -83,6 +85,7 @@ namespace QLBikeStoresAPI.Controllers
                     Discount = item.Discount,
                     ImageBike = item.ImageBike,
                     ModelYear = item.ModelYear,
+                    Describe=item.Describe,
                 };
                 listproduct.Add(productmodel);
             }
@@ -108,6 +111,7 @@ namespace QLBikeStoresAPI.Controllers
                     Discount = item.Discount,
                     ImageBike = item.ImageBike,
                     ModelYear = item.ModelYear,
+                    Describe = item.Describe,
                 };
                 listproduct.Add(productmodel);
             }
@@ -133,6 +137,7 @@ namespace QLBikeStoresAPI.Controllers
                     Discount = item.Discount,
                     ImageBike = item.ImageBike,
                     ModelYear = item.ModelYear,
+                    Describe=item.Describe,
                 };
                 listproduct.Add(productmodel);
             }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using QLBikeStoresAPI.Models;
 using Services.Interfaces;
+using Services.Models;
 using System.Collections.Generic;
 
 namespace QLBikeStoresAPI.Controllers
@@ -34,7 +35,9 @@ namespace QLBikeStoresAPI.Controllers
                     Street=item.Street,
                     City=item.City,
                     State=item.State,
-                    ZipCode=item.ZipCode
+                    ZipCode=item.ZipCode,
+                    Username=item.Username,
+                    Password=item.Password,
                 };
                 listcustomer.Add(customer);
             }
@@ -58,7 +61,59 @@ namespace QLBikeStoresAPI.Controllers
                     Street = customerdetails.Street,
                     City = customerdetails.City,
                     State = customerdetails.State,
-                    ZipCode = customerdetails.ZipCode
+                    ZipCode = customerdetails.ZipCode,
+                    Username=customerdetails.Username,
+                    Password=customerdetails.Password
+                };
+            }
+            return customer;
+        }
+
+        [HttpPost("KiemTraUsername/{username}")]
+        public CustomerModel KiemTraUsername(string username)
+        {
+            var data = _iXuLyKhachHang.KiemTraUsername(username);
+            CustomerModel customer = null;
+            if (data != null)
+            {
+                customer = new CustomerModel
+                {
+                    CustomerId = data.CustomerId,
+                    FirstName = data.FirstName,
+                    LastName = data.LastName,
+                    Phone = data.Phone,
+                    Email = data.Email,
+                    Street = data.Street,
+                    City = data.City,
+                    State = data.State,
+                    ZipCode = data.ZipCode,
+                    Username = data.Username,
+                    Password = data.Password
+                };
+            }
+            return customer;
+        }
+
+        [HttpPost("DangNhap/{model}")]
+        public CustomerModel DangNhap(LoginModel model)
+        {
+            var data = _iXuLyKhachHang.DangNhap(model); 
+            CustomerModel customer = null;
+            if (data != null)
+            {
+                customer = new CustomerModel
+                {
+                    CustomerId = data.CustomerId,
+                    FirstName = data.FirstName,
+                    LastName = data.LastName,
+                    Phone = data.Phone,
+                    Email = data.Email,
+                    Street = data.Street,
+                    City = data.City,
+                    State = data.State,
+                    ZipCode = data.ZipCode,
+                    Username = data.Username,
+                    Password = data.Password
                 };
             }
             return customer;

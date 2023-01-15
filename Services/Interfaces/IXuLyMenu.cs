@@ -1,4 +1,5 @@
 ﻿using Services.Base;
+using Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace Services.Interfaces
 {
-    public interface IXuLyMenu
+    public interface IXuLyMenu : IBaseRepository<MenuModel>
     {
+        List<MenuModel> GetAll();
     }
 }

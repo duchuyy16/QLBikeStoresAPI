@@ -10,5 +10,6 @@
         public decimal ListPrice { get; set; }
         public string ImageBike { get; set; }
         public decimal Discount { get; set; }
+        public string Describe { get; set; }
     }
 }

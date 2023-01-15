@@ -33,7 +33,10 @@ namespace QLBikeStoresAPI.Controllers
                     Email = item.Email,
                     Active = item.Active,
                     StoreId = (int)item.StoreId,
-                    ManagerId = item.ManagerId
+                    ManagerId = item.ManagerId,
+                    Username = item.Username,
+                    Password = item.Password,
+                    RoleId = item.RoleId
                 };
                 liststaff.Add(staff);
             }
@@ -56,7 +59,10 @@ namespace QLBikeStoresAPI.Controllers
                     Email = staffs.Email,
                     Active = staffs.Active,
                     StoreId = (int)staffs.StoreId,
-                    ManagerId = staffs.ManagerId
+                    ManagerId = staffs.ManagerId,
+                    Username=staffs.Username,
+                    Password=staffs.Password,
+                    RoleId=staffs.RoleId
                 };
             }
             return staff;

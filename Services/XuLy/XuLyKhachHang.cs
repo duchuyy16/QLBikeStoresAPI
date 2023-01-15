@@ -19,10 +19,22 @@ namespace Services.XuLy
             return customers;
         }
 
+        public Customer DangNhap(LoginModel model)
+        {
+            var data = _context.Customers.Where(s => s.Username == model.Username).FirstOrDefault();
+            return data;
+        }
+
         public List<Customer> DanhSachKhachHang()
         {
             var customers = _context.Customers.ToList();
             return customers;
+        }
+
+        public Customer KiemTraUsername(string username)
+        {
+            var data = _context.Customers.Where(e => e.Username == username).SingleOrDefault();
+            return data;
         }
     }
 }
