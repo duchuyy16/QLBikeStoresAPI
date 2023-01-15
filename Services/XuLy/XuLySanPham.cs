@@ -43,11 +43,17 @@ namespace Services.XuLy
             return products;
         }
 
-        public int ThemSanPham(Product product)
+        public async Task<int> ThemSanPham(Product product)
         {
             _context.Products.Add(product);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return product.ProductId;
+        }
+
+        public async Task<Product> GetProduct(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+            return product;
         }
     }
 }

@@ -16,7 +16,8 @@ namespace Services.Interfaces
         Product ChiTietSanPham(int id);
         List<Product> TimKiem(string name);
 
-        int ThemSanPham(Product product);
+        public Task<int> ThemSanPham(Product product);
+        public Task<Product> GetProduct(int id);
     }
 
 }

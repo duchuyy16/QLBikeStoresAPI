@@ -8,6 +8,8 @@ using Services.XuLy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+
 namespace QLBikeStoresAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -145,5 +147,26 @@ namespace QLBikeStoresAPI.Controllers
             return listproduct;
         }
 
+        [HttpPost("Themsanpham")]
+        public async Task<IActionResult> ThemSanPham(Product product)
+        {
+            try
+            {
+                var id =await _iXuLySanPham.ThemSanPham(Product);
+                var productdetails = await _iXuLySanPham.GetProduct(id);
+                return productdetails ==  null? NotFound() : Ok(productdetails);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost("GetProductById/{id}")]
+        public async Task<IActionResult> GetProductById(int id)
+        {
+            var product = await _iXuLySanPham.GetProduct(id);
+            return product == null ? NotFound() : Ok(product);          
+        }
     }
 }
