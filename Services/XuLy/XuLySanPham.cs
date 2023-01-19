@@ -43,17 +43,22 @@ namespace Services.XuLy
             return products;
         }
 
-        public async Task<int> ThemSanPham(Product product)
-        {
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
-            return product.ProductId;
-        }
+        //public async Task<int> ThemSanPham(Product product)
+        //{
+        //    _context.Products.Add(product);
+        //    await _context.SaveChangesAsync();
+        //    return product.ProductId;
+        //}
 
-        public async Task<Product> GetProduct(int id)
-        {
-            var product = await _context.Products.FindAsync(id);
-            return product;
-        }
+        //public async Task<Product> GetProduct(int id)
+        //{
+        //    var product = await _context.Products.FindAsync(id);
+        //    return product;
+        //}
+
+        //int IXuLySanPham.ThemSanPham(Product product)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

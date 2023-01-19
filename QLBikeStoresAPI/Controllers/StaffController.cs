@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using QLBikeStoresAPI.Models;
 using Services.Interfaces;
+using Services.Models;
+using System;
 using System.Collections.Generic;
 
 namespace QLBikeStoresAPI.Controllers
@@ -17,14 +19,14 @@ namespace QLBikeStoresAPI.Controllers
         }
 
 
-        [HttpPost("DanhSachNhanVien")]
+        [HttpPost("DocDanhSachNhanVien")]
         public List<StaffModel> DanhSachNhanVien()
         {
             var staffs = _iXuLyNhanVien.DanhSachNhanVien();
-            List<StaffModel> liststaff = new List<StaffModel>();
+            List<StaffModel> listStaff = new List<StaffModel>();
             foreach (var item in staffs)
             {
-                StaffModel staff = new StaffModel
+                StaffModel staffmodel = new StaffModel
                 {
                     StaffId = item.StaffId,
                     FirstName = item.FirstName,
@@ -32,16 +34,18 @@ namespace QLBikeStoresAPI.Controllers
                     Phone = item.Phone,
                     Email = item.Email,
                     Active = item.Active,
-                    StoreId = (int)item.StoreId,
+                    StoreId = item.StoreId,
                     ManagerId = item.ManagerId,
                     Username = item.Username,
                     Password = item.Password,
                     RoleId = item.RoleId
                 };
-                liststaff.Add(staff);
+                listStaff.Add(staffmodel);
             }
-            return liststaff;
+            return listStaff;
         }
+
+      
 
         [HttpPost("ChiTietNhanVien/{id}")]
         public StaffModel ChiTietNhanVien(int id)
@@ -66,6 +70,75 @@ namespace QLBikeStoresAPI.Controllers
                 };
             }
             return staff;
+        }
+
+        [HttpPost("ThemNhanVienMoi")]
+        public StaffModel ThemNhanVien(StaffModel staff)
+        {
+            var newStaff = new Staff
+            {            
+                FirstName = staff.FirstName,
+                LastName = staff.LastName,
+                Phone = staff.Phone,
+                Email = staff.Email,
+                Active = staff.Active,
+                StoreId = staff.StoreId,
+                ManagerId = staff.ManagerId,
+                Username = staff.Username,
+                Password = staff.Password,
+                RoleId = staff.RoleId,
+            };
+            var addNV = _iXuLyNhanVien.Them(newStaff);
+            return new StaffModel
+            {
+                FirstName = addNV.FirstName,
+                LastName = addNV.LastName,
+                Phone = addNV.Phone,
+                Email = addNV.Email,
+                Active = addNV.Active,
+                StoreId = addNV.StoreId,
+                ManagerId = addNV.ManagerId,
+                Username = addNV.Username,
+                Password = addNV.Password,
+                RoleId = addNV.RoleId,
+            };
+        }
+
+        [HttpPost("CapNhatNhanVien")]
+        public bool CapNhatNhanVien(StaffModel staff)
+        {
+            var updateStaff = new Staff
+            {
+                StaffId = staff.StaffId,
+                FirstName = staff.FirstName,
+                LastName = staff.LastName,
+                Phone = staff.Phone,
+                Email = staff.Email,
+                Active = staff.Active,
+                StoreId = (int)staff.StoreId,
+                ManagerId = staff.ManagerId,
+                Username = staff.Username,
+                Password = staff.Password,
+                RoleId = staff.RoleId
+            };
+            var update = _iXuLyNhanVien.Sua(updateStaff);
+            return update;
+        }
+
+        [HttpPost("XoaNhanVien")]
+        public bool XoaNhanVien(StaffModel staff)
+        {
+            try
+            {
+                var nhanVien = _iXuLyNhanVien.ChiTietNhanVien(staff.StaffId);
+                if (nhanVien == null) return false;
+                var kq = _iXuLyNhanVien.Xoa(nhanVien);
+                return kq;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

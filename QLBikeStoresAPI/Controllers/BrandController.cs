@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using QLBikeStoresAPI.Models;
 using Services.Interfaces;
+using Services.Models;
+using System;
 using System.Collections.Generic;
 
 namespace QLBikeStoresAPI.Controllers
@@ -49,6 +51,48 @@ namespace QLBikeStoresAPI.Controllers
                 };
             }
             return brand;
+        }
+
+        [HttpPost("ThemNhanHieu")]
+        public BrandModel ThemNhanHieu(BrandModel brand)
+        {
+            var newBrand = new Brand
+            {
+                BrandName = brand.BrandName
+            };
+            var addStore = _iXuLyNhanHieu.Them(newBrand);
+            return new BrandModel
+            {
+                BrandName = addStore.BrandName
+            };
+        }
+
+        [HttpPost("CapNhatNhanHieu")]
+        public bool CapNhatNhanHieu(BrandModel brand)
+        {
+            var updateBrand = new Brand
+            {
+                BrandId = brand.BrandId,
+                BrandName = brand.BrandName
+            };
+            var update = _iXuLyNhanHieu.Sua(updateBrand);
+            return update;
+        }
+
+        [HttpPost("XoaNhanHieu")]
+        public bool XoaNhanHieu(BrandModel brand)
+        {
+            try
+            {
+                var nhanHieu = _iXuLyNhanHieu.ChiTietNhanHieu(brand.BrandId);
+                if (nhanHieu == null) return false;
+                var kq = _iXuLyNhanHieu.Xoa(nhanHieu);
+                return kq;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

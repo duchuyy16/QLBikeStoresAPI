@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using QLBikeStoresAPI.Models;
 using Services.Interfaces;
 using Services.Models;
+using System;
 using System.Collections.Generic;
 
 namespace QLBikeStoresAPI.Controllers
@@ -40,26 +41,86 @@ namespace QLBikeStoresAPI.Controllers
             return liststore;
         }
 
-        //[HttpPost("ChiTietCuaHang/{id}")]
-        //public StoreModel ChiTietCuaHang(int id)
-        //{
-        //    var storedetails = _iXuLyCuaHang.ChiTietCuaHang(id);
-        //    StoreModel store = null;
-        //    if(storedetails !=null)
-        //    {
-        //        store = new StoreModel
-        //        {
-        //            StoreId = storedetails.StoreId,
-        //            StoreName = storedetails.StoreName,
-        //            Phone = storedetails.Phone,
-        //            City = storedetails.City,
-        //            Email = storedetails.Email,
-        //            State = storedetails.State,
-        //            Street = storedetails.Street,
-        //            ZipCode = storedetails.ZipCode,
-        //        };
-        //    } 
-        //    return store;
-        //}
+        [HttpPost("ChiTietCuaHang/{id}")]
+        public StoreModel ChiTietCuaHang(int id)
+        {
+            var storeDetails = _iXuLyCuaHang.ChiTietCuaHang(id);
+            StoreModel store = null;
+            if (storeDetails != null)
+            {
+                store = new StoreModel
+                {
+                    StoreId = storeDetails.StoreId,
+                    StoreName = storeDetails.StoreName,
+                    Phone = storeDetails.Phone,
+                    City = storeDetails.City,
+                    Email = storeDetails.Email,
+                    State = storeDetails.State,
+                    Street = storeDetails.Street,
+                    ZipCode = storeDetails.ZipCode,
+                };
+            }
+            return store;
+        }
+
+        [HttpPost("ThemCuaHang")]
+        public StoreModel ThemCuaHang(StoreModel store)
+        {
+            var newStore = new Store
+            {
+                StoreName = store.StoreName,
+                Phone = store.Phone,
+                City = store.City,
+                Email = store.Email,
+                State = store.State,
+                Street = store.Street,
+                ZipCode = store.ZipCode
+            };
+            var addStore = _iXuLyCuaHang.Them(newStore);
+            return new StoreModel
+            {
+                StoreName = addStore.StoreName,
+                Phone = addStore.Phone,
+                City = addStore.City,
+                Email = addStore.Email,
+                State = addStore.State,
+                Street = addStore.Street,
+                ZipCode = addStore.ZipCode
+            };
+        }
+
+        [HttpPost("CapNhatCuaHang")]
+        public bool CapNhatCuaHang(StoreModel store)
+        {
+            var updateStore = new Store
+            {
+                StoreId = store.StoreId,
+                StoreName = store.StoreName,
+                Phone = store.Phone,
+                City = store.City,
+                Email = store.Email,
+                State = store.State,
+                Street = store.Street,
+                ZipCode = store.ZipCode
+            };
+            var update = _iXuLyCuaHang.Sua(updateStore);
+            return update;
+        }
+
+        [HttpPost("XoaCuaHang")]
+        public bool XoaCuaHang(StoreModel store)
+        {
+            try
+            {
+                var cuaHang = _iXuLyCuaHang.ChiTietCuaHang(store.StoreId);
+                if (cuaHang == null) return false;
+                var kq = _iXuLyCuaHang.Xoa(cuaHang);
+                return kq;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

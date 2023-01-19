@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using QLBikeStoresAPI.Models;
 using Services.Interfaces;
+using Services.Models;
+using System;
 using System.Collections.Generic;
 
 namespace QLBikeStoresAPI.Controllers
@@ -18,11 +20,11 @@ namespace QLBikeStoresAPI.Controllers
         [HttpPost("DanhSachDonDatHang")]
         public List<OrderItemModel> DanhSachDonDatHang()
         {
-            var oderitems = _iXuLyDonDatHang.DanhSachDonDatHang();
-            List<OrderItemModel> listorders = new List<OrderItemModel>();
-            foreach (var item in oderitems)
+            var orderItems = _iXuLyDonDatHang.DanhSachDonDatHang();
+            List<OrderItemModel> listOrders = new List<OrderItemModel>();
+            foreach (var item in orderItems)
             {
-                OrderItemModel orderitem = new OrderItemModel
+                OrderItemModel orderItem = new OrderItemModel
                 {
                     OrderId = item.OrderId,
                     ItemId = item.ItemId,
@@ -31,29 +33,86 @@ namespace QLBikeStoresAPI.Controllers
                     Discount = item.Discount,
                     Quantity = item.Quantity
                 };
-                listorders.Add(orderitem);
+                listOrders.Add(orderItem);
             }
-            return listorders;
+            return listOrders;
         }
 
         [HttpPost("ChiTietDonDatHang/{orderId}&{itemId}")]
         public OrderItemModel ChiTietDonDatHang(int orderId, int itemId)
         {
-            var orderdetails = _iXuLyDonDatHang.ChiTietDonDatHang(orderId,itemId);
+            var orderDetails = _iXuLyDonDatHang.ChiTietDonDatHang(orderId,itemId);
             OrderItemModel orderitem = null;
-            if (orderdetails!=null)
+            if (orderDetails != null)
             {
                 orderitem = new OrderItemModel
                 {
-                    OrderId = orderdetails.OrderId,
-                    ItemId = orderdetails.ItemId,
-                    ProductId = orderdetails.ProductId,
-                    ListPrice = orderdetails.ListPrice,
-                    Discount = orderdetails.Discount,
-                    Quantity = orderdetails.Quantity
+                    OrderId = orderDetails.OrderId,
+                    ItemId = orderDetails.ItemId,
+                    ProductId = orderDetails.ProductId,
+                    ListPrice = orderDetails.ListPrice,
+                    Discount = orderDetails.Discount,
+                    Quantity = orderDetails.Quantity
                 };
             }
             return orderitem;
+        }
+
+
+        [HttpPost("ThemChiTietDonDatHang")]
+        public OrderItemModel ThemChiTietDonDatHang(OrderItemModel orderItem)
+        {
+            var newOrderItem = new OrderItem
+            {
+                OrderId= orderItem.OrderId,
+                ItemId= orderItem.ItemId,
+                ProductId = orderItem.ProductId,
+                ListPrice = orderItem.ListPrice,
+                Discount = orderItem.Discount,
+                Quantity = orderItem.Quantity
+            };
+            var addOrderItem = _iXuLyDonDatHang.Them(newOrderItem);
+            return new OrderItemModel
+            {
+                OrderId = addOrderItem.OrderId,
+                ItemId = orderItem.ItemId,
+                ProductId = addOrderItem.ProductId,
+                ListPrice = addOrderItem.ListPrice,
+                Discount = addOrderItem.Discount,
+                Quantity = addOrderItem.Quantity
+            };
+        }
+
+        [HttpPost("CapNhatChiTietDonHang")]
+        public bool CapNhatChiTietDonHang(OrderItemModel orderItem)
+        {
+            var updateOrderItem = new OrderItem
+            {
+                OrderId = orderItem.OrderId,
+                ItemId = orderItem.ItemId,
+                ProductId = orderItem.ProductId,
+                ListPrice = orderItem.ListPrice,
+                Discount = orderItem.Discount,
+                Quantity = orderItem.Quantity
+            };
+            var update = _iXuLyDonDatHang.Sua(updateOrderItem);
+            return update;
+        }
+
+        [HttpPost("XoaChiTietDonHang")]
+        public bool XoaChiTietDonHang(OrderItemModel orderItem)
+        {
+            try
+            {
+                var chiTietDonHang = _iXuLyDonDatHang.ChiTietDonDatHang(orderItem.OrderId,orderItem.ItemId);
+                if (chiTietDonHang == null) return false;
+                var kq = _iXuLyDonDatHang.Xoa(chiTietDonHang);
+                return kq;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

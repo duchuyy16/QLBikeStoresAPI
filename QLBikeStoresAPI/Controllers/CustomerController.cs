@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using QLBikeStoresAPI.Models;
 using Services.Interfaces;
 using Services.Models;
+using System;
 using System.Collections.Generic;
 
 namespace QLBikeStoresAPI.Controllers
@@ -118,5 +119,75 @@ namespace QLBikeStoresAPI.Controllers
             }
             return customer;
         }
+
+        [HttpPost("ThemKhachHang")]
+        public CustomerModel ThemKhachHang(CustomerModel customer)
+        {
+            var newCustomer = new Customer
+            {
+                FirstName = customer.FirstName,
+                LastName = customer.LastName,
+                Phone = customer.Phone,
+                Email = customer.Email,
+                Street = customer.Street,
+                City = customer.City,
+                State = customer.State,
+                ZipCode = customer.ZipCode,
+                Username = customer.Username,
+                Password = customer.Password
+            };
+            var addCustomer = _iXuLyKhachHang.Them(newCustomer);
+            return new CustomerModel
+            {
+                FirstName = addCustomer.FirstName,
+                LastName = addCustomer.LastName,
+                Phone = addCustomer.Phone,
+                Email = addCustomer.Email,
+                Street = addCustomer.Street,
+                City = addCustomer.City,
+                State = addCustomer.State,
+                ZipCode = addCustomer.ZipCode,
+                Username = addCustomer.Username,
+                Password = addCustomer.Password
+            };
+        }
+
+        [HttpPost("CapNhatKhachHang")]
+        public bool CapNhatKhachHang(CustomerModel customer)
+        {
+            var updateCustomer = new Customer
+            {
+                CustomerId = customer.CustomerId,
+                FirstName = customer.FirstName,
+                LastName = customer.LastName,
+                Phone = customer.Phone,
+                Email = customer.Email,
+                Street = customer.Street,
+                City = customer.City,
+                State = customer.State,
+                ZipCode = customer.ZipCode,
+                Username = customer.Username,
+                Password = customer.Password
+            };
+            var update = _iXuLyKhachHang.Sua(updateCustomer);
+            return update;
+        }
+
+        [HttpPost("XoaKhachHang")]
+        public bool XoaKhachHang(CustomerModel customer)
+        {
+            try
+            {
+                var khachHang = _iXuLyKhachHang.ChiTietKhachHang(customer.CustomerId);
+                if (khachHang == null) return false;
+                var kq = _iXuLyKhachHang.Xoa(khachHang);
+                return kq;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
     }
 }

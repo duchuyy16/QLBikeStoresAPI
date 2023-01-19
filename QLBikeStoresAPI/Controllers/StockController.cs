@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using QLBikeStoresAPI.Models;
 using Services.Interfaces;
+using Services.Models;
+using System;
 using System.Collections.Generic;
 
 namespace QLBikeStoresAPI.Controllers
@@ -36,7 +38,7 @@ namespace QLBikeStoresAPI.Controllers
         }
 
         [HttpPost("ChiTiet/{productId}&{storeId}")]
-        public StockModel ChiTietDonDatHang(int productId, int storeId)
+        public StockModel ChiTiet(int productId, int storeId)
         {
             var stockdetails = _iXuLyKhoHang.ChiTiet(productId, storeId);
             StockModel stock = null;
@@ -50,6 +52,54 @@ namespace QLBikeStoresAPI.Controllers
                 };
             }
             return stock;
+        }
+
+        [HttpPost("ThemKhoHang")]
+        public StockModel ThemKhoHang(StockModel stock)
+        {
+            var newStock = new Stock
+            {
+                ProductId = stock.ProductId,
+                StoreId = stock.StoreId,
+                Quantity = stock.Quantity
+            };
+            var addStock = _iXuLyKhoHang.Them(newStock);
+            return new StockModel
+            {
+                ProductId = addStock.ProductId,
+                StoreId = addStock.StoreId,
+                Quantity = addStock.Quantity
+            };
+        }
+
+        //chi cap nhat so luong
+        [HttpPost("CapNhatKho")]
+        public bool CapNhatKhoHang(StockModel stock)
+        {
+            var updateStock = new Stock
+            {
+                StoreId = stock.StoreId,
+                ProductId = stock.ProductId,
+                Quantity = stock.Quantity
+            };
+            var update = _iXuLyKhoHang.Sua(updateStock);
+            return update;
+        }
+
+        [HttpPost("XoaKhoHang")]
+        public bool XoaKhoHang(StockModel stock)
+        {
+            try
+            {
+                var khoHang = _iXuLyKhoHang.ChiTiet(stock.ProductId,stock.StoreId);
+                if (khoHang == null) return false;
+                var kq = _iXuLyKhoHang.Xoa(khoHang);
+                return kq;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

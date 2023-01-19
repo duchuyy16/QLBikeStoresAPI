@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using QLBikeStoresAPI.Models;
 using Services.Interfaces;
+using Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +52,46 @@ namespace QLBikeStoresAPI.Controllers
             }
             return listcategory;
         }
+        [HttpPost("ThemTheLoai")]
+        public CategoryModel ThemTheLoai(CategoryModel category)
+        {
+            var newCategory = new Category
+            {
+                CategoryName = category.CategoryName
+            };
+            var addCategory = _iXuLyTheLoai.Them(newCategory);
+            return new CategoryModel
+            {
+                CategoryName = addCategory.CategoryName
+            };
+        }
 
+        [HttpPost("CapNhatTheLoai")]
+        public bool CapNhatTheLoai(CategoryModel category)
+        {
+            var updateCategory = new Category
+            {
+                CategoryId = category.CategoryId,
+                CategoryName = category.CategoryName
+            };
+            var update = _iXuLyTheLoai.Sua(updateCategory);
+            return update;
+        }
+
+        [HttpPost("XoaTheLoai")]
+        public bool XoaTheLoai(CategoryModel category)
+        {
+            try
+            {
+                var theLoai = _iXuLyTheLoai.DocThongTin(category.CategoryId);
+                if (theLoai == null) return false;
+                var kq = _iXuLyTheLoai.Xoa(theLoai);
+                return kq;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

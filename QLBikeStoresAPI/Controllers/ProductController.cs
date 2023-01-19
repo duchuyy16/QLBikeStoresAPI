@@ -43,8 +43,8 @@ namespace QLBikeStoresAPI.Controllers
             return product;
         }
 
-        [HttpPost("DocDanhSachSanPham")]
-        public List<ProductModel> DocDanhSachSanPham()
+        [HttpPost("DanhSachSanPham")]
+        public List<ProductModel> DanhSachSanPham()
         {
             var product = _iXuLySanPham.DocDanhSachSanPham();
             List<ProductModel> listproduct = new List<ProductModel>(); 
@@ -147,42 +147,67 @@ namespace QLBikeStoresAPI.Controllers
             return listproduct;
         }
 
-        //[HttpPost("Themsanpham")]
-        //public async Task<IActionResult> ThemSanPham(Product product)
-        //{
-        //    try
-        //    {
-        //        var id =await _iXuLySanPham.ThemSanPham(product);
-        //        var productdetails = await _iXuLySanPham.GetProduct(id);
-        //        return productdetails ==  null? NotFound() : Ok(productdetails);
-        //    }
-        //    catch
-        //    {
-        //        return BadRequest();
-        //    }
-        //}
-
-        //[HttpPost("GetProductById/{id}")]
-        //public async Task<IActionResult> GetProductById(int id)
-        //{
-        //    var product = await _iXuLySanPham.GetProduct(id);
-        //    return product == null ? NotFound() : Ok(product);          
-        //}
-
-        [HttpPost("AddSP")]
-        public ProductModel AddSP(ProductModel product)
+        [HttpPost("ThemSanPham")]
+        public ProductModel ThemSanPham(ProductModel product)
         {
-            var newproduct = new Product
+            var newProduct = new Product
             {
                 ProductName = product.ProductName,
-                BrandId = product.BrandId
+                BrandId = product.BrandId,
+                CategoryId= product.CategoryId,
+                ModelYear= product.ModelYear,
+                ListPrice = product.ListPrice,
+                Describe=product.Describe,
+                Discount=product.Discount,
+                ImageBike= product.ImageBike,
             };
-            var themsp = _iXuLySanPham.Them(newproduct);
+            var addSP = _iXuLySanPham.Them(newProduct);
             return new ProductModel
             {
-                ProductName = themsp.ProductName,
-
+                ProductName = addSP.ProductName,
+                BrandId = addSP.BrandId,
+                CategoryId = addSP.CategoryId,
+                ModelYear = addSP.ModelYear,
+                ListPrice = addSP.ListPrice,
+                Describe = addSP.Describe,
+                Discount = addSP.Discount,
+                ImageBike = addSP.ImageBike,
             };
+        }
+
+        [HttpPost("CapNhatSanPham")]
+        public bool CapNhatSanPham(ProductModel product)
+        {
+            var updateProduct = new Product
+            {
+                ProductId = product.ProductId,
+                ProductName = product.ProductName,
+                BrandId = product.BrandId,
+                CategoryId = product.CategoryId,
+                ModelYear = product.ModelYear,
+                ListPrice = product.ListPrice,
+                Describe = product.Describe,
+                Discount = product.Discount,
+                ImageBike = product.ImageBike,
+            };
+            var update = _iXuLySanPham.Sua(updateProduct);
+            return update;
+        }
+
+        [HttpPost("XoaSanPham")]
+        public bool XoaSanPham(ProductModel product)
+        {
+            try
+            {
+                var sanPham = _iXuLySanPham.ChiTietSanPham(product.ProductId);
+                if (sanPham == null) return false;
+                var kq = _iXuLySanPham.Xoa(sanPham);
+                return kq;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }
