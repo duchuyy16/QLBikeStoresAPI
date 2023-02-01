@@ -14,5 +14,6 @@ namespace Services.Interfaces
         Customer ChiTietKhachHang(int id);
         Customer KiemTraUsername(string username);
         Customer DangNhap(LoginModel model);
+        Customer DangKy(SignUp model);
     }
 }

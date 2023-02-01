@@ -95,7 +95,7 @@ namespace QLBikeStoresAPI.Controllers
             return customer;
         }
 
-        [HttpPost("DangNhap/{model}")]
+        [HttpPost("DangNhap")]
         public CustomerModel DangNhap(LoginModel model)
         {
             var data = _iXuLyKhachHang.DangNhap(model); 

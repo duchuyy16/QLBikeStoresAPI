@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Services.XuLy
 {
-    internal class XuLyMenu : BaseRepository<MenuModel>, IXuLyMenu
+    public class XuLyMenu : BaseRepository<MenuModel>, IXuLyMenu
     {
         public XuLyMenu(demoContext context) : base(context)
         {
