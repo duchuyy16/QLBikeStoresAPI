@@ -1,4 +1,6 @@
-﻿namespace QLBikeStoresAPI.Models
+﻿using System.Collections.Generic;
+
+namespace QLBikeStoresAPI.Models
 {
     public class ProductModel
     {
@@ -11,5 +13,7 @@
         public string ImageBike { get; set; }
         public decimal Discount { get; set; }
         public string Describe { get; set; }
+        public CategoryModel Category { get; set; }
+        public List<StockModel> Stocks { get; set; }
     }
 }

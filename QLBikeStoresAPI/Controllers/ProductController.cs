@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Mapster;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QLBikeStoresAPI.Models;
@@ -17,6 +18,7 @@ namespace QLBikeStoresAPI.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IXuLySanPham _iXuLySanPham;
+        //private readonly IXuLySanPham _iXuLySanPham;
         public ProductController(IXuLySanPham iXuLySanPham)
         {
             _iXuLySanPham = iXuLySanPham;
@@ -38,7 +40,7 @@ namespace QLBikeStoresAPI.Controllers
                     Discount = productdetails.Discount,
                     ImageBike = productdetails.ImageBike,
                     ModelYear = productdetails.ModelYear,
-                    Describe=productdetails.Describe,
+                    Describe = productdetails.Describe,
                 };
             return product;
         }
@@ -47,25 +49,32 @@ namespace QLBikeStoresAPI.Controllers
         public List<ProductModel> DanhSachSanPham()
         {
             var product = _iXuLySanPham.DocDanhSachSanPham();
-            List<ProductModel> listproduct = new List<ProductModel>(); 
-            
-                foreach (var item in product)
+            List<ProductModel> listproduct = new List<ProductModel>();
+
+            foreach (var item in product)
+            {
+                ProductModel productmodel = new ProductModel
                 {
-                    ProductModel productmodel = new ProductModel
-                    {
-                        ProductId = item.ProductId,
-                        ProductName = item.ProductName,
-                        ListPrice = item.ListPrice,
-                        BrandId = item.BrandId,
-                        CategoryId = item.CategoryId,
-                        Discount = item.Discount,
-                        ImageBike = item.ImageBike,
-                        ModelYear = item.ModelYear,
-                        Describe = item.Describe,
-                    };
-                    listproduct.Add(productmodel);
-                }
-                                           
+                    ProductId = item.ProductId,
+                    ProductName = item.ProductName,
+                    ListPrice = item.ListPrice,
+                    BrandId = item.BrandId,
+                    CategoryId = item.CategoryId,
+                    Discount = item.Discount,
+                    ImageBike = item.ImageBike,
+                    ModelYear = item.ModelYear,
+                    Describe = item.Describe,
+                    Category = item.Category.Adapt<CategoryModel>(),
+                    Stocks = item.Stocks.Adapt<List<StockModel>>()
+                    //Category = new CategoryModel()
+                    //{
+                    //    CategoryId = item.Category.CategoryId,
+                    //    CategoryName = item.Category.CategoryName
+                    //}
+                };
+                listproduct.Add(productmodel);
+            }
+
             return listproduct;
         }
 
@@ -87,7 +96,7 @@ namespace QLBikeStoresAPI.Controllers
                     Discount = item.Discount,
                     ImageBike = item.ImageBike,
                     ModelYear = item.ModelYear,
-                    Describe=item.Describe,
+                    Describe = item.Describe,
                 };
                 listproduct.Add(productmodel);
             }
@@ -98,7 +107,7 @@ namespace QLBikeStoresAPI.Controllers
         [HttpPost("DocDanhSachSanPhamTheoTheLoaiThuongHieu/{categoryId}&{brandId}")]
         public List<ProductModel> DocDanhSachSanPhamTheoTheLoaiThuongHieu(int categoryId, int brandId)
         {
-            var product = _iXuLySanPham.DocDanhSachSanPhamTheoTheLoaiThuongHieu(categoryId,brandId);
+            var product = _iXuLySanPham.DocDanhSachSanPhamTheoTheLoaiThuongHieu(categoryId, brandId);
             List<ProductModel> listproduct = new List<ProductModel>();
 
             foreach (var item in product)
@@ -139,7 +148,7 @@ namespace QLBikeStoresAPI.Controllers
                     Discount = item.Discount,
                     ImageBike = item.ImageBike,
                     ModelYear = item.ModelYear,
-                    Describe=item.Describe,
+                    Describe = item.Describe,
                 };
                 listproduct.Add(productmodel);
             }
@@ -154,12 +163,12 @@ namespace QLBikeStoresAPI.Controllers
             {
                 ProductName = product.ProductName,
                 BrandId = product.BrandId,
-                CategoryId= product.CategoryId,
-                ModelYear= product.ModelYear,
+                CategoryId = product.CategoryId,
+                ModelYear = product.ModelYear,
                 ListPrice = product.ListPrice,
-                Describe=product.Describe,
-                Discount=product.Discount,
-                ImageBike= product.ImageBike,
+                Describe = product.Describe,
+                Discount = product.Discount,
+                ImageBike = product.ImageBike,
             };
             var addSP = _iXuLySanPham.Them(newProduct);
             return new ProductModel

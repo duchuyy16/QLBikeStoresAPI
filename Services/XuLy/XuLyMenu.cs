@@ -22,14 +22,23 @@ namespace Services.XuLy
             List<MenuModel> menuList = new List<MenuModel>();
             foreach (var category in categories)
             {
+                var brands = _context.Brands.Include(x => x.Products).Where(n => n.Products.Any(m => m.CategoryId == category.CategoryId)).ToList();
+
+                foreach (var brand in brands)
+                {
+                    brand.Products.Clear();
+                }
+
                 MenuModel menu = new MenuModel
                 {
                     CategoryId = category.CategoryId,
                     CategoryName = category.CategoryName,
-                    Brands = _context.Brands.Include(x => x.Products).Where(n => n.Products.Any(m => m.CategoryId == category.CategoryId)).ToList()
+                    Brands = brands
                 };
+
                 menuList.Add(menu);
             }
+
             return menuList;
         }
     }

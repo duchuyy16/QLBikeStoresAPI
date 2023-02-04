@@ -19,6 +19,22 @@ namespace Services.XuLy
             return customers;
         }
 
+        public Customer DangKy(SignUp model)
+        {
+            var data = new Customer()
+            {
+                FirstName = model.Firstname,
+                LastName = model.Lastname,
+                Username = model.Username,
+                Email = model.Email,
+                Password = model.Password,
+                Phone = model.Phone,
+            };
+            _context.Customers.Add(data);
+            _context.SaveChanges();
+            return data;
+        }
+
         public Customer DangNhap(LoginModel model)
         {
             var data = _context.Customers.Where(s => s.Username == model.Username).FirstOrDefault();

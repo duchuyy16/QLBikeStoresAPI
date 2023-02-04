@@ -120,6 +120,32 @@ namespace QLBikeStoresAPI.Controllers
             return customer;
         }
 
+        [HttpPost("DangKy")]
+        public CustomerModel DangKy(SignUp model)
+        {
+            var data = _iXuLyKhachHang.DangKy(model);
+            CustomerModel customer = null;
+            if (data != null)
+            {
+                customer = new CustomerModel
+                {
+                    CustomerId = data.CustomerId,
+                    FirstName = data.FirstName,
+                    LastName = data.LastName,
+                    Phone = data.Phone,
+                    Email = data.Email,
+                    Street = data.Street,
+                    City = data.City,
+                    State = data.State,
+                    ZipCode = data.ZipCode,
+                    Username = data.Username,
+                    Password = data.Password
+                };
+            }
+            return customer;
+        }
+
+
         [HttpPost("ThemKhachHang")]
         public CustomerModel ThemKhachHang(CustomerModel customer)
         {

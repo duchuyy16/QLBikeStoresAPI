@@ -17,12 +17,12 @@ namespace Services.XuLy
 
         public Role ChiTietQuyen(int id)
         {
-            throw new NotImplementedException();
+            return _context.Roles.FirstOrDefault(m => m.RoleId == id);
         }
 
         public List<Role> DanhSachQuyen()
         {
-            throw new NotImplementedException();
+            return _context.Roles.ToList();
         }
     }
 }

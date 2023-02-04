@@ -32,20 +32,8 @@ namespace QLBikeStoresAPI.Controllers
                 };
                 listMenu.Add(menu);
             }
+
             return listMenu;
-            //List<Category> categories = _iXuLyMenu..ToList();
-            //List<MenuModel> menuList = new List<MenuModel>();
-            //foreach (var category in categories)
-            //{
-            //    MenuModel menu = new MenuModel
-            //    {
-            //        CategoryId = category.CategoryId,
-            //        CategoryName = category.CategoryName,
-            //        Brands = _context.Brands.Include(x => x.Products).Where(n => n.Products.Any(m => m.CategoryId == category.CategoryId)).ToList()
-            //    };
-            //    menuList.Add(menu);
-            //}
-            //return stock;
         }
     }
 }

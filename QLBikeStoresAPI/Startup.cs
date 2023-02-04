@@ -30,6 +30,7 @@ namespace QLBikeStoresAPI
                 cors.AddPolicy("AllowOrgin", c => c.AllowAnyOrigin());
             });
             services.AddControllers();
+
             services.AddDbContext<demoContext>();
             services.AddScoped<IXuLyTheLoaiSanPham, XuLyTheLoaiSanPham>();
             services.AddScoped<IXuLySanPham, XuLySanPham>();
@@ -41,6 +42,7 @@ namespace QLBikeStoresAPI
             services.AddScoped<IXuLyMuaHang, XuLyMuaHang>();
             services.AddScoped<IXuLyDonDatHang, XuLyDonDatHang>();
             services.AddScoped<IXuLyMenu, XuLyMenu>();
+            services.AddScoped<IXuLyQuyen, XuLyQuyen>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
