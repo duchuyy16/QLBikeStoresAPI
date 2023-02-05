@@ -18,7 +18,7 @@ namespace QLBikeStoresAPI.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IXuLySanPham _iXuLySanPham;
-        //private readonly IXuLySanPham _iXuLySanPham;
+        
         public ProductController(IXuLySanPham iXuLySanPham)
         {
             _iXuLySanPham = iXuLySanPham;
@@ -41,6 +41,9 @@ namespace QLBikeStoresAPI.Controllers
                     ImageBike = productdetails.ImageBike,
                     ModelYear = productdetails.ModelYear,
                     Describe = productdetails.Describe,
+                    Category = productdetails.Category.Adapt<CategoryModel>(),
+                    Stocks = productdetails.Stocks.Adapt<List<StockModel>>(),
+                    Brand=productdetails.Brand.Adapt<BrandModel>(),
                 };
             return product;
         }
@@ -50,7 +53,6 @@ namespace QLBikeStoresAPI.Controllers
         {
             var product = _iXuLySanPham.DocDanhSachSanPham();
             List<ProductModel> listproduct = new List<ProductModel>();
-
             foreach (var item in product)
             {
                 ProductModel productmodel = new ProductModel
@@ -65,7 +67,8 @@ namespace QLBikeStoresAPI.Controllers
                     ModelYear = item.ModelYear,
                     Describe = item.Describe,
                     Category = item.Category.Adapt<CategoryModel>(),
-                    Stocks = item.Stocks.Adapt<List<StockModel>>()
+                    Stocks = item.Stocks.Adapt<List<StockModel>>(),
+                    Brand = item.Brand.Adapt<BrandModel>(),
                     //Category = new CategoryModel()
                     //{
                     //    CategoryId = item.Category.CategoryId,
@@ -97,10 +100,12 @@ namespace QLBikeStoresAPI.Controllers
                     ImageBike = item.ImageBike,
                     ModelYear = item.ModelYear,
                     Describe = item.Describe,
+                    Category = item.Category.Adapt<CategoryModel>(),
+                    Stocks = item.Stocks.Adapt<List<StockModel>>(),
+                    Brand = item.Brand.Adapt<BrandModel>(),
                 };
                 listproduct.Add(productmodel);
             }
-
             return listproduct;
         }
 
@@ -123,6 +128,9 @@ namespace QLBikeStoresAPI.Controllers
                     ImageBike = item.ImageBike,
                     ModelYear = item.ModelYear,
                     Describe = item.Describe,
+                    Category = item.Category.Adapt<CategoryModel>(),
+                    Stocks = item.Stocks.Adapt<List<StockModel>>(),
+                    Brand = item.Brand.Adapt<BrandModel>(),
                 };
                 listproduct.Add(productmodel);
             }
@@ -149,6 +157,9 @@ namespace QLBikeStoresAPI.Controllers
                     ImageBike = item.ImageBike,
                     ModelYear = item.ModelYear,
                     Describe = item.Describe,
+                    Category = item.Category.Adapt<CategoryModel>(),
+                    Stocks = item.Stocks.Adapt<List<StockModel>>(),
+                    Brand = item.Brand.Adapt<BrandModel>(),
                 };
                 listproduct.Add(productmodel);
             }

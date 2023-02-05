@@ -36,7 +36,7 @@ namespace QLBikeStoresAPI.Controllers
         }
 
 
-        [HttpPost("ChiTietQuyen")]
+        [HttpPost("ChiTietQuyen/{id}")]
         public RoleModel ChiTiet(int id)
         {
             var roleDetails = _iXuLyQuyen.ChiTietQuyen(id);

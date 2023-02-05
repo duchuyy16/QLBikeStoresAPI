@@ -98,7 +98,7 @@ namespace QLBikeStoresAPI.Controllers
         [HttpPost("DangNhap")]
         public CustomerModel DangNhap(LoginModel model)
         {
-            var data = _iXuLyKhachHang.DangNhap(model); 
+            var data = _iXuLyKhachHang.DangNhap(model);
             CustomerModel customer = null;
             if (data != null)
             {

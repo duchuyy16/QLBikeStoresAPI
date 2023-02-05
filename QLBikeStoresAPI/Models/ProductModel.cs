@@ -15,5 +15,7 @@ namespace QLBikeStoresAPI.Models
         public string Describe { get; set; }
         public CategoryModel Category { get; set; }
         public List<StockModel> Stocks { get; set; }
+        public BrandModel Brand { get; set; }
+        
     }
 }
