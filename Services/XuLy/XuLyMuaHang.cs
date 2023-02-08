@@ -27,5 +27,15 @@ namespace Services.XuLy
             var orders = _context.Orders.Include(o => o.Customer).Include(o => o.Staff).Include(o => o.Store).ToList();
             return orders;
         }
+
+        public Order Find(int id)
+        {
+            return _context.Orders.Find(id);
+        }
+
+        public bool IsExists(int id)
+        {
+            return _context.Orders.Any(e => e.OrderId == id);
+        }
     }
 }

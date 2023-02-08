@@ -94,5 +94,37 @@ namespace QLBikeStoresAPI.Controllers
                 return false;
             }
         }
+
+        [HttpPost("TimKiem/{id}")]
+        public BrandModel TimKiem(int id)
+        {
+            var data = _iXuLyNhanHieu.Find(id);
+            BrandModel brandmodel=null;
+            if(data!=null)
+            {
+                brandmodel = new BrandModel
+                {
+                    BrandId = data.BrandId,
+                    BrandName = data.BrandName
+                };    
+            }
+            return brandmodel;
+        }
+
+        [HttpPost("BrandExists/{id}")]
+        public bool BrandExists(int id)
+        {
+            try
+            {
+                var data = _iXuLyNhanHieu.BrandExists(id);
+                if (data != true) return false;
+                else return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
     }
 }

@@ -12,5 +12,7 @@ namespace Services.Interfaces
     {
         List<Store> DocDanhSachCuaHang();
         Store ChiTietCuaHang(int id);
+        Store Find(int id);
+        bool IsExists(int id);
     }
 }

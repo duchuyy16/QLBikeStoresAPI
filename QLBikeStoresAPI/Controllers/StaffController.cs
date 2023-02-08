@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Mapster;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QLBikeStoresAPI.Models;
 using Services.Interfaces;
@@ -38,7 +39,9 @@ namespace QLBikeStoresAPI.Controllers
                     ManagerId = item.ManagerId,
                     Username = item.Username,
                     Password = item.Password,
-                    RoleId = item.RoleId
+                    RoleId = item.RoleId,
+                    Role = item.Role.Adapt<RoleModel>(),
+                    Store = item.Store.Adapt<StoreModel>()
                 };
                 listStaff.Add(staffmodel);
             }
@@ -66,7 +69,36 @@ namespace QLBikeStoresAPI.Controllers
                     ManagerId = staffs.ManagerId,
                     Username=staffs.Username,
                     Password=staffs.Password,
-                    RoleId=staffs.RoleId
+                    RoleId=staffs.RoleId,
+                    Role = staffs.Role.Adapt<RoleModel>(),
+                    Store = staffs.Store.Adapt<StoreModel>(),
+                };
+            }
+            return staff;
+        }
+
+        [HttpPost("DangNhap")]
+        public StaffModel DangNhap(LoginModel model)
+        {
+            var data = _iXuLyNhanVien.DangNhap(model);
+            StaffModel staff = null;
+            if (data != null)
+            {
+                staff = new StaffModel
+                {
+                    StaffId = data.StaffId,
+                    FirstName = data.FirstName,
+                    LastName = data.LastName,
+                    Phone = data.Phone,
+                    Email = data.Email,
+                    Active = data.Active,
+                    StoreId = data?.StoreId,
+                    ManagerId = data?.ManagerId,
+                    Username = data.Username,
+                    Password = data.Password,
+                    RoleId = data.RoleId,
+                    Role = data.Role.Adapt<RoleModel>(),
+                    Store = data.Store != null ? data.Store.Adapt<StoreModel>() : new StoreModel(),
                 };
             }
             return staff;
@@ -115,7 +147,7 @@ namespace QLBikeStoresAPI.Controllers
                 Phone = staff.Phone,
                 Email = staff.Email,
                 Active = staff.Active,
-                StoreId = (int)staff.StoreId,
+                StoreId = staff?.StoreId,
                 ManagerId = staff.ManagerId,
                 Username = staff.Username,
                 Password = staff.Password,
@@ -134,6 +166,48 @@ namespace QLBikeStoresAPI.Controllers
                 if (nhanVien == null) return false;
                 var kq = _iXuLyNhanVien.Xoa(nhanVien);
                 return kq;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        [HttpPost("TimKiem/{id}")]
+        public StaffModel TimKiem(int id)
+        {
+            var data = _iXuLyNhanVien.Find(id);
+            StaffModel staff = null;
+            if (data != null)
+            {
+                staff = new StaffModel
+                {
+                    StaffId = data.StaffId,
+                    FirstName = data.FirstName,
+                    LastName = data.LastName,
+                    Phone = data.Phone,
+                    Email = data.Email,
+                    Active = data.Active,
+                    StoreId = data?.StoreId,
+                    ManagerId = data.ManagerId,
+                    Username = data.Username,
+                    Password = data.Password,
+                    RoleId = data.RoleId,
+                    Role = data.Role.Adapt<RoleModel>(),
+                    Store = data.Store != null ? data.Store.Adapt<StoreModel>() : new StoreModel(),
+                };
+            }
+            return staff;
+        }
+
+        [HttpPost("StaffExists/{id}")]
+        public bool IsExists(int id)
+        {
+            try
+            {
+                var data = _iXuLyNhanVien.IsExists(id);
+                if (data != true) return false;
+                else return true;
             }
             catch (Exception)
             {

@@ -13,5 +13,7 @@ namespace Services.Interfaces
         List<Brand> DanhSachNhanHieu();
         List<Brand> DanhSachNhanHieuTheoDieuKien(int category);
         Brand ChiTietNhanHieu(int id);
+        Brand Find(int id);
+        bool BrandExists(int id);
     }
 }

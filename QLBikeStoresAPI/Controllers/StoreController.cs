@@ -122,5 +122,42 @@ namespace QLBikeStoresAPI.Controllers
                 return false;
             }
         }
+
+        [HttpPost("TimKiem/{id}")]
+        public StoreModel TimKiem(int id)
+        {
+            var data = _iXuLyCuaHang.Find(id);
+            StoreModel store = null;
+            if (data != null)
+            {
+                store = new StoreModel
+                {
+                    StoreId = store.StoreId,
+                    StoreName = store.StoreName,
+                    Phone = store.Phone,
+                    City = store.City,
+                    Email = store.Email,
+                    State = store.State,
+                    Street = store.Street,
+                    ZipCode = store.ZipCode
+                };
+            }
+            return store;
+        }
+
+        [HttpPost("StoreExists/{id}")]
+        public bool IsExists(int id)
+        {
+            try
+            {
+                var data = _iXuLyCuaHang.IsExists(id);
+                if (data != true) return false;
+                else return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

@@ -12,5 +12,7 @@ namespace Services.Interfaces
     {
         List<Stock> DocDanhSach();
         Stock ChiTiet(int productId,int storeId);
+        Stock Find(int productId, int storeId);
+        bool IsExists(int productId, int storeId);
     }
 }

@@ -24,6 +24,16 @@ namespace Services.XuLy
             var stores = _context.Stores.ToList();
             return stores;
         }
+
+        public Store Find(int id)
+        {
+            return _context.Stores.Find(id);
+        }
+
+        public bool IsExists(int id)
+        {
+            return _context.Stores.Any(e => e.StoreId == id);
+        }
     }
 
 }

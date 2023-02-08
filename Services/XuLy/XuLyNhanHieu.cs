@@ -14,6 +14,11 @@ namespace Services.XuLy
     {
         public XuLyNhanHieu(demoContext context) : base(context){}
 
+        public bool BrandExists(int id)
+        {
+            return _context.Brands.Any(e => e.BrandId == id);
+        }
+
         public Brand ChiTietNhanHieu(int id)
         {
             var brands = _context.Brands.FirstOrDefault(b=>b.BrandId.Equals(id));
@@ -31,5 +36,12 @@ namespace Services.XuLy
             var brands = _context.Brands.Include(x => x.Products).Where(n => n.Products.Any(m => m.CategoryId == category)).ToList();
             return brands;
         }
+
+        public Brand Find(int id)
+        {
+            return _context.Brands.Find(id);
+        }
+
+        
     }
 }

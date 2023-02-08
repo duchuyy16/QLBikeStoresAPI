@@ -215,5 +215,45 @@ namespace QLBikeStoresAPI.Controllers
             }
         }
 
+
+        [HttpPost("TimKiem/{id}")]
+        public CustomerModel TimKiem(int id)
+        {
+            var data = _iXuLyKhachHang.Find(id);
+            CustomerModel customer = null;
+            if (data != null)
+            {
+                customer = new CustomerModel
+                {
+                    CustomerId = data.CustomerId,
+                    FirstName = data.FirstName,
+                    LastName = data.LastName,
+                    Phone = data.Phone,
+                    Email = data.Email,
+                    Street = data.Street,
+                    City = data.City,
+                    State = data.State,
+                    ZipCode = data.ZipCode,
+                    Username = data.Username,
+                    Password = data.Password
+                };
+            }
+            return customer;
+        }
+
+        [HttpPost("CustomerExists/{id}")]
+        public bool IsExists(int id)
+        {
+            try
+            {
+                var data = _iXuLyKhachHang.IsExists(id);
+                if (data != true) return false;
+                else return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

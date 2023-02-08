@@ -24,5 +24,15 @@ namespace Services.XuLy
         {
             return _context.Roles.ToList();
         }
+
+        public Role Find(int id)
+        {
+            return _context.Roles.Find(id);
+        }
+
+        public bool IsExists(int id)
+        {
+            return _context.Roles.Any(e => e.RoleId == id);
+        }
     }
 }

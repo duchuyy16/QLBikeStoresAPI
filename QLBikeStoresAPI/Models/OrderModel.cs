@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace QLBikeStoresAPI.Models
 {
@@ -12,5 +13,9 @@ namespace QLBikeStoresAPI.Models
         public DateTime? ShippedDate { get; set; }
         public int StoreId { get; set; }
         public int StaffId { get; set; }
+        public  CustomerModel Customer { get; set; }
+        public  StaffModel Staff { get; set; }
+        public  StoreModel Store { get; set; }
+        public  List<OrderItemModel> OrderItems { get; set; }
     }
 }

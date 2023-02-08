@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Mapster;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QLBikeStoresAPI.Models;
 using Services.Interfaces;
@@ -34,7 +35,11 @@ namespace QLBikeStoresAPI.Controllers
                     RequiredDate = item.RequiredDate,
                     ShippedDate = item.ShippedDate,
                     StaffId = item.StaffId,
-                    StoreId = item.StoreId
+                    StoreId = item.StoreId,
+                    Customer = item.Customer.Adapt<CustomerModel>(),
+                    Staff = item.Staff.Adapt<StaffModel>(),
+                    Store = item.Store.Adapt<StoreModel>(),
+                    OrderItems = item.OrderItems.Adapt<List<OrderItemModel>>()
                 };
                 listorder.Add(order);
             }
@@ -57,7 +62,11 @@ namespace QLBikeStoresAPI.Controllers
                     RequiredDate = orderdetails.RequiredDate,
                     ShippedDate = orderdetails.ShippedDate,
                     StaffId = orderdetails.StaffId,
-                    StoreId = orderdetails.StoreId
+                    StoreId = orderdetails.StoreId,
+                    Customer = orderdetails.Customer.Adapt<CustomerModel>(),
+                    Staff = orderdetails.Staff.Adapt<StaffModel>(),
+                    Store = orderdetails.Store.Adapt<StoreModel>(),
+                    OrderItems = orderdetails.OrderItems.Adapt<List<OrderItemModel>>()
                 };
             }
             return orderitem;
@@ -122,5 +131,48 @@ namespace QLBikeStoresAPI.Controllers
                 return false;
             }
         }
+
+        [HttpPost("TimKiem/{id}")]
+        public OrderModel TimKiem(int id)
+        {
+            var data = _iXuLyMuaHang.Find(id);
+            OrderModel order = null;
+            if (data != null)
+            {
+                order = new OrderModel
+                {
+                    OrderId = data.OrderId,
+                    CustomerId = data.CustomerId,
+                    OrderDate = data.OrderDate,
+                    OrderStatus = data.OrderStatus,
+                    RequiredDate = data.RequiredDate,
+                    ShippedDate = data.ShippedDate,
+                    StaffId = data.StaffId,
+                    StoreId = data.StoreId,
+                    Customer = data.Customer.Adapt<CustomerModel>(),
+                    Staff = data.Staff.Adapt<StaffModel>(),
+                    Store = data.Store.Adapt<StoreModel>(),
+                    OrderItems = data.OrderItems.Adapt<List<OrderItemModel>>()
+                };
+            }
+            return order;
+        }
+
+        [HttpPost("OrderExists/{id}")]
+        public bool IsExists(int id)
+        {
+            try
+            {
+                var data = _iXuLyMuaHang.IsExists(id);
+                if (data != true) return false;
+                else return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+
     }
 }

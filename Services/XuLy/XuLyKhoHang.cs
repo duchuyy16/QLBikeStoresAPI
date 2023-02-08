@@ -27,5 +27,15 @@ namespace Services.XuLy
             var stocks = _context.Stocks.Include(s => s.Product).Include(s => s.Store).ToList();
             return stocks;
         }
+
+        public Stock Find(int productId, int storeId)
+        {
+            return _context.Stocks.Find(storeId, productId);
+        }
+
+        public bool IsExists(int productId, int storeId)
+        {
+            return _context.Stocks.Any(e => e.StoreId == storeId && e.ProductId == productId);
+        }
     }
 }

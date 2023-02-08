@@ -93,5 +93,36 @@ namespace QLBikeStoresAPI.Controllers
                 return false;
             }
         }
+
+        [HttpPost("TimKiem/{id}")]
+        public CategoryModel TimKiem(int id)
+        {
+            var data = _iXuLyTheLoai.Find(id);
+            CategoryModel category = null;
+            if (data != null)
+            {
+                category = new CategoryModel
+                {
+                    CategoryId=data.CategoryId,
+                    CategoryName=data.CategoryName
+                };
+            }
+            return category;
+        }
+
+        [HttpPost("CategoryExists/{id}")]
+        public bool IsExists(int id)
+        {
+            try
+            {
+                var data = _iXuLyTheLoai.IsExist(id);
+                if (data != true) return false;
+                else return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

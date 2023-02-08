@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Mapster;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QLBikeStoresAPI.Models;
 using Services.Interfaces;
@@ -86,6 +87,37 @@ namespace QLBikeStoresAPI.Controllers
                 if (roles == null) return false;
                 var kq = _iXuLyQuyen.Xoa(roles);
                 return kq;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        [HttpPost("TimKiem/{id}")]
+        public RoleModel TimKiem(int id)
+        {
+            var data = _iXuLyQuyen.Find(id);
+            RoleModel role = null;
+            if (data != null)
+            {
+                role = new RoleModel
+                {
+                    RoleId = data.RoleId,
+                    RoleName = data.RoleName,
+                };
+            }
+            return role;
+        }
+
+        [HttpPost("RoleExists/{id}")]
+        public bool IsExists(int id)
+        {
+            try
+            {
+                var data = _iXuLyQuyen.IsExists(id);
+                if (data != true) return false;
+                else return true;
             }
             catch (Exception)
             {

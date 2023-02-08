@@ -12,5 +12,8 @@ namespace Services.Interfaces
     {
         List<Staff> DanhSachNhanVien();
         Staff ChiTietNhanVien(int id);
+        Staff DangNhap(LoginModel model);
+        Staff Find(int id);
+        bool IsExists(int id);
     }
 }

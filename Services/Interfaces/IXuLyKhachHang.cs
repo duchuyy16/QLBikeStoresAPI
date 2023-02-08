@@ -15,5 +15,7 @@ namespace Services.Interfaces
         Customer KiemTraUsername(string username);
         Customer DangNhap(LoginModel model);
         Customer DangKy(SignUp model);
+        Customer Find(int id);
+        bool IsExists(int id);
     }
 }

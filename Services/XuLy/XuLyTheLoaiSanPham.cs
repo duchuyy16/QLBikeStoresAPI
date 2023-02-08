@@ -27,6 +27,16 @@ namespace Services.XuLy
             return categories;
         }
 
+        public Category Find(int id)
+        {
+            return _context.Categories.Find(id);
+        }
+
+        public bool IsExist(int id)
+        {
+            return _context.Categories.Any(e => e.CategoryId == id);
+        }
+
         public new bool Xoa(Category entity)
         {
             try

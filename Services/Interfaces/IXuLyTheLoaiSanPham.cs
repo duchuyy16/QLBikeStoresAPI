@@ -12,5 +12,7 @@ namespace Services.Interfaces
     {
         Category DocThongTin(int id);
         List<Category> DanhSachTheLoai();
+        Category Find(int id);
+        bool IsExist(int id);
     }
 }

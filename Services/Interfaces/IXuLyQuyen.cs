@@ -12,5 +12,7 @@ namespace Services.Interfaces
     {
         List<Role> DanhSachQuyen();
         Role ChiTietQuyen(int id);
+        Role Find(int id);
+        bool IsExists(int id);
     }
 }

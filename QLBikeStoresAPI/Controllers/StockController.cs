@@ -101,5 +101,37 @@ namespace QLBikeStoresAPI.Controllers
                 return false;
             }
         }
+
+        [HttpPost("TimKiem/{productId}&{storeId}")]
+        public StockModel TimKiem(int productId, int storeId)
+        {
+            var data = _iXuLyKhoHang.Find(productId,storeId);
+            StockModel stock = null;
+            if (data != null)
+            {
+                stock = new StockModel
+                {
+                    StoreId = stock.StoreId,
+                    ProductId = stock.ProductId,
+                    Quantity = stock.Quantity
+                };
+            }
+            return stock;
+        }
+
+        [HttpPost("StockExists/{productId}&{storeId}")]
+        public bool IsExists(int productId, int storeId)
+        {
+            try
+            {
+                var data = _iXuLyKhoHang.IsExists(productId, storeId);
+                if (data != true) return false;
+                else return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace QLBikeStoresAPI.Models
+﻿using System.Collections.Generic;
+
+namespace QLBikeStoresAPI.Models
 {
     public class RoleModel
     {

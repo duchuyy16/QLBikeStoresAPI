@@ -52,5 +52,15 @@ namespace Services.XuLy
             var data = _context.Customers.Where(e => e.Username == username).SingleOrDefault();
             return data;
         }
+
+        public Customer Find(int id)
+        {
+            return _context.Customers.Find(id);
+        }
+
+        public bool IsExists(int id)
+        {
+            return _context.Customers.Any(e => e.CustomerId == id);
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace QLBikeStoresAPI.Models
+﻿using System.Collections.Generic;
+
+namespace QLBikeStoresAPI.Models
 {
     public class StaffModel
     {
@@ -13,5 +15,10 @@
         public string Username { get; set; }
         public string Password { get; set; }
         public int? RoleId { get; set; }
+        public StaffModel Manager { get; set; }
+        public  RoleModel Role { get; set; }
+        public  StoreModel Store { get; set; }
+        public  List<StaffModel> InverseManager { get; set; }
+        public List<OrderModel> Orders { get; set; }
     }
 }
