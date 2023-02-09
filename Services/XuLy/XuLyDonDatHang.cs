@@ -27,5 +27,15 @@ namespace Services.XuLy
             var orderitems=_context.OrderItems.Include(o => o.Order).Include(o => o.Product).ToList();
             return orderitems;
         }
+
+        public OrderItem Find(int orderId, int itemId)
+        {
+            return _context.OrderItems.Find(orderId, itemId);
+        }
+
+        public bool IsExists(int orderId, int itemId)
+        {
+            return _context.OrderItems.Any(e => e.OrderId == orderId && e.ItemId == itemId);
+        }
     }
 }

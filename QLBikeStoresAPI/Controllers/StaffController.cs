@@ -192,9 +192,7 @@ namespace QLBikeStoresAPI.Controllers
                     ManagerId = data.ManagerId,
                     Username = data.Username,
                     Password = data.Password,
-                    RoleId = data.RoleId,
-                    Role = data.Role.Adapt<RoleModel>(),
-                    Store = data.Store != null ? data.Store.Adapt<StoreModel>() : new StoreModel(),
+                    RoleId = data.RoleId
                 };
             }
             return staff;

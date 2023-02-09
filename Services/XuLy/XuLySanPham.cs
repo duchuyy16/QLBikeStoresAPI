@@ -42,5 +42,15 @@ namespace Services.XuLy
             var products = _context.Products.Where(m => m.ProductName.Contains(name)).Include(p => p.Brand).Include(p => p.Category).Include(m => m.Stocks).ToList();
             return products;
         }
+
+        public Product Find(int id)
+        {
+            return _context.Products.Find(id);
+        }
+
+        public bool IsExists(int id)
+        {
+            return _context.Products.Any(e => e.ProductId == id);
+        }
     }
 }

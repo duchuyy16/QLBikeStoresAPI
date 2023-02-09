@@ -229,5 +229,43 @@ namespace QLBikeStoresAPI.Controllers
                 return false;
             }
         }
+
+        [HttpPost("Find/{id}")]
+        public ProductModel Find(int id)
+        {
+            var data = _iXuLySanPham.Find(id);
+            ProductModel product = null;
+            if (data != null)
+            {
+                product = new ProductModel
+                {
+                    ProductId = data.ProductId,
+                    ProductName = data.ProductName,
+                    ListPrice = data.ListPrice,
+                    BrandId = data.BrandId,
+                    CategoryId = data.CategoryId,
+                    Discount = data.Discount,
+                    ImageBike = data.ImageBike,
+                    ModelYear = data.ModelYear,
+                    Describe = data.Describe
+                };
+            }
+            return product;
+        }
+
+        [HttpPost("ProductExists/{id}")]
+        public bool IsExists(int id)
+        {
+            try
+            {
+                var data = _iXuLySanPham.IsExists(id);
+                if (data != true) return false;
+                else return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

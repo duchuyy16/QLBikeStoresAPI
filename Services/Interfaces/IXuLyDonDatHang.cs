@@ -12,5 +12,7 @@ namespace Services.Interfaces
     {
         List<OrderItem> DanhSachDonDatHang();
         OrderItem ChiTietDonDatHang(int orderId,int itemId);
+        OrderItem Find(int orderId, int itemId);
+        bool IsExists(int orderId, int itemId);
     }
 }

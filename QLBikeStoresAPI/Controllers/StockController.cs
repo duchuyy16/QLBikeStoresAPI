@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Mapster;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QLBikeStoresAPI.Models;
 using Services.Interfaces;
@@ -21,7 +22,6 @@ namespace QLBikeStoresAPI.Controllers
         [HttpPost("DocDanhSach")]
         public List<StockModel> DocDanhSach()
         {
-
             var stocks = _iXuLyKhoHang.DocDanhSach();
             List<StockModel> liststock = new List<StockModel>();
             foreach (var item in stocks)
@@ -30,7 +30,9 @@ namespace QLBikeStoresAPI.Controllers
                 {
                     StoreId = item.StoreId,
                     ProductId = item.ProductId,
-                    Quantity=item.Quantity
+                    Quantity=item.Quantity,
+                    Product = item.Product.Adapt<ProductModel>(),
+                    Store = item.Store.Adapt<StoreModel>()
                 };
                 liststock.Add(stock);
             }
@@ -111,9 +113,9 @@ namespace QLBikeStoresAPI.Controllers
             {
                 stock = new StockModel
                 {
-                    StoreId = stock.StoreId,
-                    ProductId = stock.ProductId,
-                    Quantity = stock.Quantity
+                    StoreId = data.StoreId,
+                    ProductId = data.ProductId,
+                    Quantity = data.Quantity
                 };
             }
             return stock;

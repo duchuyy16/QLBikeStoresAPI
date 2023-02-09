@@ -41,7 +41,7 @@ namespace QLBikeStoresAPI.Controllers
         [HttpPost("ChiTietDonDatHang/{orderId}&{itemId}")]
         public OrderItemModel ChiTietDonDatHang(int orderId, int itemId)
         {
-            var orderDetails = _iXuLyDonDatHang.ChiTietDonDatHang(orderId,itemId);
+            var orderDetails = _iXuLyDonDatHang.ChiTietDonDatHang(orderId, itemId);
             OrderItemModel orderitem = null;
             if (orderDetails != null)
             {
@@ -64,8 +64,8 @@ namespace QLBikeStoresAPI.Controllers
         {
             var newOrderItem = new OrderItem
             {
-                OrderId= orderItem.OrderId,
-                ItemId= orderItem.ItemId,
+                OrderId = orderItem.OrderId,
+                ItemId = orderItem.ItemId,
                 ProductId = orderItem.ProductId,
                 ListPrice = orderItem.ListPrice,
                 Discount = orderItem.Discount,
@@ -104,10 +104,45 @@ namespace QLBikeStoresAPI.Controllers
         {
             try
             {
-                var chiTietDonHang = _iXuLyDonDatHang.ChiTietDonDatHang(orderItem.OrderId,orderItem.ItemId);
+                var chiTietDonHang = _iXuLyDonDatHang.ChiTietDonDatHang(orderItem.OrderId, orderItem.ItemId);
                 if (chiTietDonHang == null) return false;
                 var kq = _iXuLyDonDatHang.Xoa(chiTietDonHang);
                 return kq;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        [HttpPost("TimKiem/{orderId}&{itemId}")]
+        public OrderItemModel TimKiem(int orderId, int itemId)
+        {
+            var data = _iXuLyDonDatHang.Find(orderId, itemId);
+            OrderItemModel orderItem = null;
+            if (data != null)
+            {
+                orderItem = new OrderItemModel
+                {
+                    OrderId = data.OrderId,
+                    ItemId = data.ItemId,
+                    ProductId = data.ProductId,
+                    ListPrice = data.ListPrice,
+                    Discount = data.Discount,
+                    Quantity = data.Quantity
+                };
+            }
+            return orderItem;
+        }
+
+        [HttpPost("OrderItemExists/{orderId}&{itemId}")]
+        public bool IsExists(int orderId, int itemId)
+        {
+            try
+            {
+                var data = _iXuLyDonDatHang.IsExists(orderId, itemId);
+                if (data != true) return false;
+                else return true;
             }
             catch (Exception)
             {
