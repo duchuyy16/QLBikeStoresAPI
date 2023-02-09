@@ -68,7 +68,7 @@ namespace Services.Base
                 var ent = _context.Set<T>().Add(entity);
                 _context.SaveChanges();
                 return ent.Entity;
-            }catch(Exception)
+            }catch(Exception e)
             {
                 return null;
             }

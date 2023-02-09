@@ -132,14 +132,14 @@ namespace QLBikeStoresAPI.Controllers
             {
                 store = new StoreModel
                 {
-                    StoreId = store.StoreId,
-                    StoreName = store.StoreName,
-                    Phone = store.Phone,
-                    City = store.City,
-                    Email = store.Email,
-                    State = store.State,
-                    Street = store.Street,
-                    ZipCode = store.ZipCode
+                    StoreId = data.StoreId,
+                    StoreName = data.StoreName,
+                    Phone = data.Phone,
+                    City = data.City,
+                    Email = data.Email,
+                    State = data.State,
+                    Street = data.Street,
+                    ZipCode = data.ZipCode
                 };
             }
             return store;

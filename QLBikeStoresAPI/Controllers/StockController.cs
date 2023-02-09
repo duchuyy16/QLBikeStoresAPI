@@ -23,19 +23,9 @@ namespace QLBikeStoresAPI.Controllers
         public List<StockModel> DocDanhSach()
         {
             var stocks = _iXuLyKhoHang.DocDanhSach();
-            List<StockModel> liststock = new List<StockModel>();
-            foreach (var item in stocks)
-            {
-                StockModel stock = new StockModel
-                {
-                    StoreId = item.StoreId,
-                    ProductId = item.ProductId,
-                    Quantity=item.Quantity,
-                    Product = item.Product.Adapt<ProductModel>(),
-                    Store = item.Store.Adapt<StoreModel>()
-                };
-                liststock.Add(stock);
-            }
+
+           var liststock = stocks.Adapt<List<StockModel>>();
+            
             return liststock;
         }
 

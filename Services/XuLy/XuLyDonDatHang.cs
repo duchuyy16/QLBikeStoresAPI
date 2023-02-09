@@ -33,6 +33,11 @@ namespace Services.XuLy
             return _context.OrderItems.Find(orderId, itemId);
         }
 
+        public int FindMaxId()
+        {
+            return _context.OrderItems.Max(o => o.OrderId);
+        }
+
         public bool IsExists(int orderId, int itemId)
         {
             return _context.OrderItems.Any(e => e.OrderId == orderId && e.ItemId == itemId);

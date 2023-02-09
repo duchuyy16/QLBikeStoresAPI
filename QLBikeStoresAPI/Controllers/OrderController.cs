@@ -14,9 +14,13 @@ namespace QLBikeStoresAPI.Controllers
     public class OrderController : ControllerBase
     {
         public readonly IXuLyMuaHang _iXuLyMuaHang;
-        public OrderController(IXuLyMuaHang iXuLyMuaHang)
+        public readonly IXuLySanPham _iXuLySanPham;
+        public readonly IXuLyNhanVien _iXuLyNhanVien;
+        public OrderController(IXuLyMuaHang iXuLyMuaHang, IXuLySanPham IXuLySanPham, IXuLyNhanVien iXuLyNhanVien)
         {
             _iXuLyMuaHang = iXuLyMuaHang;
+            _iXuLySanPham = IXuLySanPham;
+            _iXuLyNhanVien = iXuLyNhanVien;
         }
 
         [HttpPost("DocDanhSachMuaHang")]
@@ -37,9 +41,8 @@ namespace QLBikeStoresAPI.Controllers
                     StaffId = item.StaffId,
                     StoreId = item.StoreId,
                     Customer = item.Customer.Adapt<CustomerModel>(),
-                    Staff = item.Staff.Adapt<StaffModel>(),
+                    Staff = item.Staff.Adapt<StaffOrderModel>(),
                     Store = item.Store.Adapt<StoreModel>(),
-                    OrderItems = item.OrderItems.Adapt<List<OrderItemModel>>()
                 };
                 listorder.Add(order);
             }
@@ -64,9 +67,8 @@ namespace QLBikeStoresAPI.Controllers
                     StaffId = orderdetails.StaffId,
                     StoreId = orderdetails.StoreId,
                     Customer = orderdetails.Customer.Adapt<CustomerModel>(),
-                    Staff = orderdetails.Staff.Adapt<StaffModel>(),
+                    Staff = orderdetails.Staff.Adapt<StaffOrderModel>(),
                     Store = orderdetails.Store.Adapt<StoreModel>(),
-                    OrderItems = orderdetails.OrderItems.Adapt<List<OrderItemModel>>()
                 };
             }
             return orderitem;
@@ -85,7 +87,15 @@ namespace QLBikeStoresAPI.Controllers
                 StaffId = order.StaffId,
                 StoreId = order.StoreId
             };
+
+            var staff = _iXuLyNhanVien.DanhSachNhanVien();
+            var staffDataAdapt = staff.Adapt<List<StaffOrderModel>>();
+            var rand = new Random();
+            var index = rand.Next(0, staffDataAdapt.Count);
+            var rdStaff = staffDataAdapt[index];
+
             var addOrder = _iXuLyMuaHang.Them(newOrder);
+
             return new OrderModel
             {
                 CustomerId = addOrder.CustomerId,
@@ -93,7 +103,7 @@ namespace QLBikeStoresAPI.Controllers
                 OrderStatus = addOrder.OrderStatus,
                 RequiredDate = addOrder.RequiredDate,
                 ShippedDate = addOrder.ShippedDate,
-                StaffId = addOrder.StaffId,
+                StaffId = rdStaff.StaffId,
                 StoreId = addOrder.StoreId
             };
         }
@@ -149,10 +159,6 @@ namespace QLBikeStoresAPI.Controllers
                     ShippedDate = data.ShippedDate,
                     StaffId = data.StaffId,
                     StoreId = data.StoreId,
-                    Customer = data.Customer.Adapt<CustomerModel>(),
-                    Staff = data.Staff.Adapt<StaffModel>(),
-                    Store = data.Store.Adapt<StoreModel>(),
-                    OrderItems = data.OrderItems.Adapt<List<OrderItemModel>>()
                 };
             }
             return order;

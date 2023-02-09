@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Mapster;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QLBikeStoresAPI.Models;
 using Services.Interfaces;
@@ -13,9 +14,12 @@ namespace QLBikeStoresAPI.Controllers
     public class OrderItemController : ControllerBase
     {
         public readonly IXuLyDonDatHang _iXuLyDonDatHang;
-        public OrderItemController(IXuLyDonDatHang iXuLyDonDatHang)
+        public readonly IXuLySanPham _xuLySanPham;
+
+        public OrderItemController(IXuLyDonDatHang iXuLyDonDatHang, IXuLySanPham xuLySanPham)
         {
             _iXuLyDonDatHang = iXuLyDonDatHang;
+            _xuLySanPham = xuLySanPham; 
         }
         [HttpPost("DanhSachDonDatHang")]
         public List<OrderItemModel> DanhSachDonDatHang()
@@ -31,7 +35,10 @@ namespace QLBikeStoresAPI.Controllers
                     ProductId = item.ProductId,
                     ListPrice = item.ListPrice,
                     Discount = item.Discount,
-                    Quantity = item.Quantity
+                    Quantity = item.Quantity,
+                    Product = item.Product.Adapt<ProductStockModel>(),
+                    Order=item.Order.Adapt<OrderViewModel>(),
+                    
                 };
                 listOrders.Add(orderItem);
             }
@@ -62,23 +69,33 @@ namespace QLBikeStoresAPI.Controllers
         [HttpPost("ThemChiTietDonDatHang")]
         public OrderItemModel ThemChiTietDonDatHang(OrderItemModel orderItem)
         {
+            var product = _xuLySanPham.ChiTietSanPham(orderItem.ProductId);
+            var orderId = _iXuLyDonDatHang.FindMaxId();
+
             var newOrderItem = new OrderItem
             {
-                OrderId = orderItem.OrderId,
+                OrderId = orderId + 1,
                 ItemId = orderItem.ItemId,
                 ProductId = orderItem.ProductId,
                 ListPrice = orderItem.ListPrice,
-                Discount = orderItem.Discount,
+                Discount = product.Discount,
                 Quantity = orderItem.Quantity
             };
+
             var addOrderItem = _iXuLyDonDatHang.Them(newOrderItem);
+
+            if (addOrderItem == null)
+            {
+                return new OrderItemModel();
+            }
+
             return new OrderItemModel
             {
                 OrderId = addOrderItem.OrderId,
                 ItemId = orderItem.ItemId,
                 ProductId = addOrderItem.ProductId,
                 ListPrice = addOrderItem.ListPrice,
-                Discount = addOrderItem.Discount,
+                Discount = product.Discount,
                 Quantity = addOrderItem.Quantity
             };
         }

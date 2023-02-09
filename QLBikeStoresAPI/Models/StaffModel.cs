@@ -21,4 +21,12 @@ namespace QLBikeStoresAPI.Models
         public  List<StaffModel> InverseManager { get; set; }
         public List<OrderModel> Orders { get; set; }
     }
+
+    public class StaffOrderModel
+    {
+        public int StaffId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+    }
 }
