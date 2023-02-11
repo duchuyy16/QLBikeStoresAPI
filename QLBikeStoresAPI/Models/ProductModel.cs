@@ -14,7 +14,7 @@ namespace QLBikeStoresAPI.Models
         public decimal Discount { get; set; }
         public string Describe { get; set; }
         public CategoryModel Category { get; set; }
-        public List<StockModel> Stocks { get; set; }
+        public List<StockViewModel> Stocks { get; set; }
         public BrandModel Brand { get; set; }
         
     }

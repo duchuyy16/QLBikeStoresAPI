@@ -14,12 +14,10 @@ namespace QLBikeStoresAPI.Controllers
     public class OrderController : ControllerBase
     {
         public readonly IXuLyMuaHang _iXuLyMuaHang;
-        public readonly IXuLySanPham _iXuLySanPham;
         public readonly IXuLyNhanVien _iXuLyNhanVien;
-        public OrderController(IXuLyMuaHang iXuLyMuaHang, IXuLySanPham IXuLySanPham, IXuLyNhanVien iXuLyNhanVien)
+        public OrderController(IXuLyMuaHang iXuLyMuaHang, IXuLyNhanVien iXuLyNhanVien)
         {
             _iXuLyMuaHang = iXuLyMuaHang;
-            _iXuLySanPham = IXuLySanPham;
             _iXuLyNhanVien = iXuLyNhanVien;
         }
 
@@ -91,7 +89,9 @@ namespace QLBikeStoresAPI.Controllers
             var staff = _iXuLyNhanVien.DanhSachNhanVien();
             var staffDataAdapt = staff.Adapt<List<StaffOrderModel>>();
             var rand = new Random();
+            //Sử dụng phương thức "Next" của đối tượng "rand" để tạo một số ngẫu nhiên trong khoảng từ 0 đến số phần tử trong "staffDataAdapt".
             var index = rand.Next(0, staffDataAdapt.Count);
+            //Sử dụng chỉ số được tạo ra để lấy một phần tử từ "staffDataAdapt"
             var rdStaff = staffDataAdapt[index];
 
             var addOrder = _iXuLyMuaHang.Them(newOrder);

@@ -42,7 +42,7 @@ namespace QLBikeStoresAPI.Controllers
                     ModelYear = productdetails.ModelYear,
                     Describe = productdetails.Describe,
                     Category = productdetails.Category.Adapt<CategoryModel>(),
-                    Stocks = productdetails.Stocks.Adapt<List<StockModel>>(),
+                    Stocks = productdetails.Stocks.Adapt<List<StockViewModel>>(),
                     Brand=productdetails.Brand.Adapt<BrandModel>(),
                 };
             return product;
@@ -67,7 +67,7 @@ namespace QLBikeStoresAPI.Controllers
                     ModelYear = item.ModelYear,
                     Describe = item.Describe,
                     Category = item.Category.Adapt<CategoryModel>(),
-                    Stocks = item.Stocks.Adapt<List<StockModel>>(),
+                    Stocks = item.Stocks.Adapt<List<StockViewModel>>(),
                     Brand = item.Brand.Adapt<BrandModel>(),
                     //Category = new CategoryModel()
                     //{
@@ -101,7 +101,7 @@ namespace QLBikeStoresAPI.Controllers
                     ModelYear = item.ModelYear,
                     Describe = item.Describe,
                     Category = item.Category.Adapt<CategoryModel>(),
-                    Stocks = item.Stocks.Adapt<List<StockModel>>(),
+                    Stocks = item.Stocks.Adapt<List<StockViewModel>>(),
                     Brand = item.Brand.Adapt<BrandModel>(),
                 };
                 listproduct.Add(productmodel);
@@ -129,7 +129,7 @@ namespace QLBikeStoresAPI.Controllers
                     ModelYear = item.ModelYear,
                     Describe = item.Describe,
                     Category = item.Category.Adapt<CategoryModel>(),
-                    Stocks = item.Stocks.Adapt<List<StockModel>>(),
+                    Stocks = item.Stocks.Adapt<List<StockViewModel>>(),
                     Brand = item.Brand.Adapt<BrandModel>(),
                 };
                 listproduct.Add(productmodel);
@@ -158,7 +158,36 @@ namespace QLBikeStoresAPI.Controllers
                     ModelYear = item.ModelYear,
                     Describe = item.Describe,
                     Category = item.Category.Adapt<CategoryModel>(),
-                    Stocks = item.Stocks.Adapt<List<StockModel>>(),
+                    Stocks = item.Stocks.Adapt<List<StockViewModel>>(),
+                    Brand = item.Brand.Adapt<BrandModel>(),
+                };
+                listproduct.Add(productmodel);
+            }
+
+            return listproduct;
+        }
+
+        [HttpPost("Search/{name}&{to}&{from}")]
+        public List<ProductModel> Search(string name, decimal? to, decimal? from)
+        {
+            var product = _iXuLySanPham.Search(name,to,from);
+            List<ProductModel> listproduct = new List<ProductModel>();
+
+            foreach (var item in product)
+            {
+                ProductModel productmodel = new ProductModel
+                {
+                    ProductId = item.ProductId,
+                    ProductName = item.ProductName,
+                    ListPrice = item.ListPrice,
+                    BrandId = item.BrandId,
+                    CategoryId = item.CategoryId,
+                    Discount = item.Discount,
+                    ImageBike = item.ImageBike,
+                    ModelYear = item.ModelYear,
+                    Describe = item.Describe,
+                    Category = item.Category.Adapt<CategoryModel>(),
+                    Stocks = item.Stocks.Adapt<List<StockViewModel>>(),
                     Brand = item.Brand.Adapt<BrandModel>(),
                 };
                 listproduct.Add(productmodel);

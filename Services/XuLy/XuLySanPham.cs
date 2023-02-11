@@ -52,5 +52,31 @@ namespace Services.XuLy
         {
             return _context.Products.Any(e => e.ProductId == id);
         }
+
+        public List<Product> Search(string name, decimal? to, decimal? from)
+        {
+            var products = from product in _context.Products.Include(p => p.Brand).Include(p => p.Category) select product;
+            //var pagedList =  products.ToPagedList((int)pageNo, 10);
+            if (!string.IsNullOrEmpty(name))//neu ma khong trong
+            {
+                if (to != null && from != null)
+                {
+                    products = products.Where(x => x.ProductName.Contains(name) && x.ListPrice >= to && x.ListPrice <= from).OrderByDescending(l => l.ListPrice);
+                }
+                else
+                {
+                    products = products.Where(x => x.ProductName.Contains(name));
+
+                }
+            }
+            else
+            {
+                if (to != null && from != null)
+                {
+                    products = products.Where(x => x.ProductName.Contains(name) && x.ListPrice >= to && x.ListPrice <= from);
+                }
+            }
+            return products.ToList();
+        }
     }
 }

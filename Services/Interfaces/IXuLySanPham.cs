@@ -17,6 +17,8 @@ namespace Services.Interfaces
         List<Product> TimKiem(string name);
         Product Find(int id);
         bool IsExists(int id);
+        
+        List<Product> Search(string name,decimal? to,decimal? from);
     }
 
 }
