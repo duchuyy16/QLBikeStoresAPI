@@ -19,6 +19,7 @@ namespace Services.Models
 
         public virtual DbSet<Brand> Brands { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderItem> OrderItems { get; set; }
@@ -64,6 +65,26 @@ namespace Services.Models
                     .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("category_name");
+            });
+
+            modelBuilder.Entity<Contact>(entity =>
+            {
+                entity.Property(e => e.CreateAt)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Message)
+                    .IsRequired()
+                    .HasColumnType("text");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(100);
             });
 
             modelBuilder.Entity<Customer>(entity =>

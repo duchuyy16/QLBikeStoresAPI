@@ -167,7 +167,7 @@ namespace QLBikeStoresAPI.Controllers
             return listproduct;
         }
 
-        [HttpPost("Search/{name}&{to}&{from}")]
+        [HttpPost("Search")]
         public List<ProductModel> Search(string name, decimal? to, decimal? from)
         {
             var product = _iXuLySanPham.Search(name,to,from);
