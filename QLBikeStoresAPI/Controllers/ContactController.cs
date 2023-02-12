@@ -37,7 +37,7 @@ namespace QLBikeStoresAPI.Controllers
         }
 
         [HttpPost("DanhSachLienLac")]
-        public List<ContactModel> DanhSachTheLoai()
+        public List<ContactModel> DanhSachLienLac()
         {
             var contacts = _iXuLyLienLac.DanhSachLienLac();
             List<ContactModel> lstContactModels = new List<ContactModel>();
@@ -56,7 +56,7 @@ namespace QLBikeStoresAPI.Controllers
             return lstContactModels;
         }
         [HttpPost("ThemLienLac")]
-        public async Task<Contact> ThemTheLoai(ContactModel contact)
+        public async Task<Contact> ThemLienLac(ContactModel contact)
         {
             var newContact = new Contact
             {
@@ -74,7 +74,7 @@ namespace QLBikeStoresAPI.Controllers
         }
 
         [HttpPost("CapNhatLienLac")]
-        public bool CapNhatTheLoai(ContactModel contact)
+        public bool CapNhatLienLac(ContactModel contact)
         {
             var updateContact = new Contact
             {
@@ -89,7 +89,7 @@ namespace QLBikeStoresAPI.Controllers
         }
 
         [HttpPost("XoaLienLac")]
-        public bool XoaTheLoai(ContactModel contact)
+        public bool XoaLienLac(ContactModel contact)
         {
             try
             {
