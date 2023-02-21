@@ -177,7 +177,7 @@ namespace QLBikeStoresAPI.Controllers
                 Password = addCustomer.Password
             };
         }
-
+      
         [HttpPost("CapNhatKhachHang")]
         public bool CapNhatKhachHang(CustomerModel customer)
         {

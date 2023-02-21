@@ -11,7 +11,7 @@ namespace QLBikeStoresAPI.Helpers
     public static class EmailHelper
     {
         private static readonly string _apiKey = "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";
-        private static readonly string _senderEmail = "support@code-mega.com";//email dang ky sendgrid
+        private static readonly string _senderEmail = "duchuyy16@gmail.com";//email dang ky sendgrid //duchuyy16@gmail.com //support@code-mega.com
         private static readonly string _senderName = "Duc Huy";
         public static async Task SendAsync(string sender, string message)
         {
@@ -24,7 +24,7 @@ namespace QLBikeStoresAPI.Helpers
             var tos = new List<EmailAddress>()
             {
                 new EmailAddress("duchuyy16@gmail.com", "")
-            };
+            };   
             var msg = MailHelper.CreateSingleEmailToMultipleRecipients(from, tos, "Test Send Mail", "", emailContent);
             var response = await client.SendEmailAsync(msg);
 
