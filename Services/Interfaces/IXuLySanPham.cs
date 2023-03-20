@@ -11,6 +11,7 @@ namespace Services.Interfaces
     public interface IXuLySanPham: IBaseRepository<Product>
     {
         List<Product> DocDanhSachSanPham();
+        List<Product> DanhSachSanPhamBanChay();
         List<Product> DocDanhSachSanPhamTheoTheLoai(int categoryId);
         List<Product> DocDanhSachSanPhamTheoTheLoaiThuongHieu(int categoryId, int brandId);
         Product ChiTietSanPham(int id);

@@ -18,7 +18,14 @@ namespace Services.XuLy
             var products= _context.Products.Include(p => p.Brand).Include(p => p.Category).Include(m => m.Stocks).ToList();
             return products;
         }
-        
+        public List<Product> DanhSachSanPhamBanChay()
+        {
+            var products = _context.Products.Include(p => p.Brand).Include(p => p.Category).Include(m => m.Stocks)
+                .OrderByDescending(l => l.ListPrice)
+                .Take(10)
+                .ToList();
+            return products;
+        }
         public List<Product> DocDanhSachSanPhamTheoTheLoai(int categoryId)
         {
             var products = _context.Products.Where(x => x.CategoryId == categoryId).Include(p => p.Category).Include(p => p.Brand).Include(m => m.Stocks).ToList();
@@ -78,5 +85,7 @@ namespace Services.XuLy
             }
             return products.ToList();
         }
+
+        
     }
 }

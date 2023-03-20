@@ -81,6 +81,41 @@ namespace QLBikeStoresAPI.Controllers
             return listproduct;
         }
 
+        [HttpPost("DanhSachSanPhamBanChay")]
+        public List<ProductModel> DanhSachSanPhamBanChay()
+        {
+            var product = _iXuLySanPham.DanhSachSanPhamBanChay();
+            List<ProductModel> listproduct = new List<ProductModel>();
+            foreach (var item in product)
+            {
+                ProductModel productmodel = new ProductModel
+                {
+                    ProductId = item.ProductId,
+                    ProductName = item.ProductName,
+                    ListPrice = item.ListPrice,
+                    BrandId = item.BrandId,
+                    CategoryId = item.CategoryId,
+                    Discount = item.Discount,
+                    ImageBike = item.ImageBike,
+                    ModelYear = item.ModelYear,
+                    Describe = item.Describe,
+                    Category = item.Category.Adapt<CategoryModel>(),
+                    Stocks = item.Stocks.Adapt<List<StockViewModel>>(),
+                    Brand = item.Brand.Adapt<BrandModel>(),
+                    //Category = new CategoryModel()
+                    //{
+                    //    CategoryId = item.Category.CategoryId,
+                    //    CategoryName = item.Category.CategoryName
+                    //}
+                };
+                listproduct.Add(productmodel);
+            }
+
+            return listproduct;
+        }
+
+
+
         [HttpPost("DocDanhSachSanPhamTheoTheLoai/{categoryId}")]
         public List<ProductModel> DocDanhSachSanPhamTheoTheLoai(int categoryId)
         {

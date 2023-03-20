@@ -11,6 +11,7 @@ namespace Services.Interfaces
     public interface IXuLyNhanVien : IBaseRepository<Staff>
     {
         List<Staff> DanhSachNhanVien();
+
         Staff ChiTietNhanVien(int id);
         Staff DangNhap(LoginModel model);
         Staff Find(int id);
